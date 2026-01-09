@@ -1,13 +1,156 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { places } from "@/data/properties";
 
 const Index = () => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showControls, setShowControls] = useState(false);
+  const [mapSrc, setMapSrc] = useState(
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976286.6196348995!2d120.51865817699824!3d12.869857848047245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bb61471e778851%3A0x94f1306262b234f!2sOriental%20Mindoro!5e1!3m2!1sen!2sph!4v1762053902496!5m2!1sen!2sph"
+  );
+
+  const mapTypes: Record<string, string> = {
+    default: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976286.6196348995!2d120.51865817699824!3d12.869857848047245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bb61471e778851%3A0x94f1306262b234f!2sOriental%20Mindoro!5e1!3m2!1sen!2sph!4v1762053902496!5m2!1sen!2sph",
+    satellite: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
+    terrain: "https://www.google.com/maps?q=Oriental+Mindoro&t=p&z=10&output=embed",
+    hybrid: "https://www.google.com/maps?q=Oriental+Mindoro&t=h&z=10&output=embed",
+  };
+
+  const filteredPlaces = searchQuery.trim()
+    ? places.filter(
+        (p) =>
+          p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          p.id.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : places;
+
+  const handleInquire = (placeId: string) => {
+    navigate(`/property?place=${placeId}`);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+    <>
+      {/* Header */}
+      <header className="site-header">
+        <img
+          src="https://th.bing.com/th/id/OIP.2pfvKpHfX1z7Cen5GSLDFQHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+          alt="SouthStar Realty logo"
+          className="header-logo"
+        />
+        <h1>SouthStar Realty</h1>
+      </header>
+
+      {/* Nav */}
+      <div className="nav-row">
+        <div className="nav-container">
+          <div className="nav-search">
+            <div className="search-box">
+              <div className="search-left">
+                <svg viewBox="0 0 20 20">
+                  <path d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z" />
+                </svg>
+              </div>
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search municipality (e.g. Gloria, Naujan)"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && setSearchQuery(searchQuery)}
+              />
+            </div>
+            <button className="search-btn" onClick={() => setSearchQuery(searchQuery)}>
+              Search
+            </button>
+          </div>
+
+          <nav className="nav-links">
+            <Link to="/popular">POPULAR</Link>
+            <Link to="/about">ABOUT US</Link>
+            <Link to="/contact">CONTACT</Link>
+          </nav>
+        </div>
       </div>
-    </div>
+
+      {/* Main */}
+      <main className="wrap">
+        <div className="property-overview">
+          {/* Listings */}
+          <section className="listings">
+            {filteredPlaces.length > 0 ? (
+              filteredPlaces.map((place) => (
+                <article key={place.id} className="property-card">
+                  <img
+                    src={`https://via.placeholder.com/900x300.png?text=${encodeURIComponent(place.name)}`}
+                    alt={place.name}
+                  />
+                  <div className="property-details">
+                    <div>
+                      <h3>{place.name}</h3>
+                      <p>{place.price} · {place.type}</p>
+                    </div>
+                    <button className="buy-btn" onClick={() => handleInquire(place.id)}>
+                      Inquire Now
+                    </button>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <p style={{ color: "var(--muted)", padding: "12px", margin: 0 }}>
+                No results found.
+              </p>
+            )}
+          </section>
+
+          {/* Map */}
+          <section className="map-section">
+            <h2>Interactive Google Map</h2>
+            <div className="map-box">
+              <button id="toggleLayers" onClick={() => setShowControls(!showControls)}>
+                Map Layers
+              </button>
+
+              {showControls && (
+                <div className="map-controls">
+                  {Object.entries(mapTypes).map(([key, value]) => (
+                    <button
+                      key={key}
+                      onClick={() => {
+                        setMapSrc(value);
+                        setShowControls(false);
+                      }}
+                      style={{ textTransform: "capitalize" }}
+                    >
+                      {key}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <iframe
+                src={mapSrc}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Oriental Mindoro Map"
+              />
+            </div>
+          </section>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="site-footer">
+        <div className="footer-brand">
+          <div className="footer-text">
+            <strong>SouthStar Realty</strong>
+            <small>Reliable • Affordable • Trusted</small>
+          </div>
+        </div>
+        <div>© {new Date().getFullYear()}</div>
+      </footer>
+    </>
   );
 };
 
