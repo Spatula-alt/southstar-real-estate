@@ -4,21 +4,21 @@ import { places } from "@/data/properties";
 import { toast } from "@/hooks/use-toast";
 
 const propertyData: Record<string, { title: string; map: string; img: string }> = {
-  puertogalera: { title: "Puerto Galera", map: "https://www.google.com/maps?q=Puerto+Galera+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Puerto+Galera" },
-  santeodoro: { title: "San Teodoro", map: "https://www.google.com/maps?q=San+Teodoro+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=San+Teodoro" },
-  baco: { title: "Baco", map: "https://www.google.com/maps?q=Baco+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Baco" },
-  calapan: { title: "Calapan City", map: "https://www.google.com/maps?q=Calapan+City+Oriental+Mindoro&z=13&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Calapan+City" },
-  naujan: { title: "Naujan", map: "https://www.google.com/maps?q=Naujan+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Naujan" },
-  victoria: { title: "Victoria", map: "https://www.google.com/maps?q=Victoria+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Victoria" },
-  socorro: { title: "Socorro", map: "https://www.google.com/maps?q=Socorro+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Socorro" },
-  pola: { title: "Pola", map: "https://www.google.com/maps?q=Pola+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Pola" },
-  pinamalayan: { title: "Pinamalayan", map: "https://www.google.com/maps?q=Pinamalayan+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Pinamalayan" },
-  gloria: { title: "Gloria", map: "https://www.google.com/maps?q=Gloria+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Gloria" },
-  bansud: { title: "Bansud", map: "https://www.google.com/maps?q=Bansud+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Bansud" },
-  bongabong: { title: "Bongabong", map: "https://www.google.com/maps?q=Bongabong+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Bongabong" },
-  roxas: { title: "Roxas", map: "https://www.google.com/maps?q=Roxas+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Roxas" },
-  mansalay: { title: "Mansalay", map: "https://www.google.com/maps?q=Mansalay+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Mansalay" },
-  bulalacao: { title: "Bulalacao", map: "https://www.google.com/maps?q=Bulalacao+Oriental+Mindoro&z=12&output=embed", img: "https://via.placeholder.com/1200x800.png?text=Bulalacao" }
+  puertogalera: { title: "Puerto Galera", map: "https://www.google.com/maps?q=Puerto+Galera+Oriental+Mindoro&z=12&output=embed", img: "https://www.travelorientalmindoro.ph/Content/img/uploads/3997051e-5e30-4aff-9f65-cc33f90d3b6b_thumb.jpg" },
+  santeodoro: { title: "San Teodoro", map: "https://www.google.com/maps?q=San+Teodoro+Oriental+Mindoro&z=12&output=embed", img: "https://picsum.photos/seed/santeodoro/1200/800" },
+  baco: { title: "Baco", map: "https://www.google.com/maps?q=Baco+Oriental+Mindoro&z=12&output=embed", img: "https://lh3.ggpht.com/-VTVx0NXJeXg/U26xVAI8S3I/AAAAAAAAAuE/G9uLfwrQ1Oo/IMG_0004_thumb.jpg?imgmax=800" },
+  calapan: { title: "Calapan City", map: "https://www.google.com/maps?q=Calapan+City+Oriental+Mindoro&z=13&output=embed", img: "https://media-cdn.tripadvisor.com/media/photo-s/02/f7/51/a2/only-at-calapan-orriental.jpg" },
+  naujan: { title: "Naujan", map: "https://www.google.com/maps?q=Naujan+Oriental+Mindoro&z=12&output=embed", img: "https://alchetron.com/cdn/naujan-oriental-mindoro-7f1b2edc-f2ac-49fc-8a1e-2053f454108-resize-750.jpeg" },
+  victoria: { title: "Victoria", map: "https://www.google.com/maps?q=Victoria+Oriental+Mindoro&z=12&output=embed", img: "https://i.ytimg.com/vi/jZPfSQz2nFU/hqdefault.jpg" },
+  socorro: { title: "Socorro", map: "https://www.google.com/maps?q=Socorro+Oriental+Mindoro&z=12&output=embed", img: "https://th.bing.com/th/id/OIP.-OfSmxtQLf1Twz3SJ2usQwHaFj" },
+  pola: { title: "Pola", map: "https://www.google.com/maps?q=Pola+Oriental+Mindoro&z=12&output=embed", img: "https://i.ytimg.com/vi/zFMqrUzJhZU/hqdefault.jpg" },
+  pinamalayan: { title: "Pinamalayan", map: "https://www.google.com/maps?q=Pinamalayan+Oriental+Mindoro&z=12&output=embed", img: "https://travelorientalmindoro.ph/Content/img/uploads/888ed3ef-1f02-4ee3-8f8d-560bf8fb3474.jpg" },
+  gloria: { title: "Gloria", map: "https://www.google.com/maps?q=Gloria+Oriental+Mindoro&z=12&output=embed", img: "https://travelorientalmindoro.ph/Content/img/uploads/3cf6e252-5281-4ba3-b494-2d087f0bae9e_thumb.jpg" },
+  bansud: { title: "Bansud", map: "https://www.google.com/maps?q=Bansud+Oriental+Mindoro&z=12&output=embed", img: "https://tse1.mm.bing.net/th/id/OIP.lwMdzkNCu7HTv5qYAy9tQQHaET" },
+  bongabong: { title: "Bongabong", map: "https://www.google.com/maps?q=Bongabong+Oriental+Mindoro&z=12&output=embed", img: "https://i.ytimg.com/vi/kSSMAxHN2yA/hqdefault.jpg" },
+  roxas: { title: "Roxas", map: "https://www.google.com/maps?q=Roxas+Oriental+Mindoro&z=12&output=embed", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Mindoro_Ferry_Port.jpg/500px-Mindoro_Ferry_Port.jpg" },
+  mansalay: { title: "Mansalay", map: "https://www.google.com/maps?q=Mansalay+Oriental+Mindoro&z=12&output=embed", img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0b/59/49/fc/buktot-beach-mansalay.jpg" },
+  bulalacao: { title: "Bulalacao", map: "https://www.google.com/maps?q=Bulalacao+Oriental+Mindoro&z=12&output=embed", img: "https://i.ytimg.com/vi/FLC25tWhUD8/maxresdefault.jpg" }
 };
 
 const Property = () => {
@@ -64,19 +64,19 @@ const Property = () => {
       {/* Header */}
       <header className="site-header" style={{ position: "relative" }}>
         <button
+          id="backBtn"
           onClick={() => navigate(-1)}
           style={{
             position: "absolute",
-            top: "50%",
+            top: "16px",
             left: "16px",
-            transform: "translateY(-50%)",
-            background: "#ffd700",
-            color: "#000",
+            background: "#FFD700",
             border: "none",
             borderRadius: "6px",
-            padding: "8px 14px",
+            padding: "8px 12px",
             cursor: "pointer",
-            fontWeight: 700
+            fontWeight: 700,
+            zIndex: 20
           }}
         >
           ← Back
@@ -87,14 +87,13 @@ const Property = () => {
       </header>
 
       {/* Main */}
-      <main className="wrap" style={{ paddingTop: "20px" }}>
+      <main className="wrap main-content">
         {/* Map Section */}
-        <section style={{ marginBottom: "20px" }}>
-          <h2 style={{ margin: "0 0 10px 0", fontSize: "18px", color: "#0b6123" }}>{property.title}</h2>
-          <div style={{ borderRadius: "10px", overflow: "hidden" }}>
+        <section className="map-section">
+          <h2 id="propertyTitle">{property.title}</h2>
+          <div className="map-box">
             <iframe
               src={property.map}
-              style={{ width: "100%", height: "420px", border: 0 }}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               title="Property Location Map"
@@ -103,162 +102,97 @@ const Property = () => {
         </section>
 
         {/* Property Overview */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 360px",
-          gap: "24px",
-          marginTop: "20px"
-        }}>
+        <div className="property-overview">
           {/* Gallery */}
-          <div style={{
-            background: "#fff",
-            padding: "18px",
-            borderRadius: "12px",
-            border: "2px solid #ffd700",
-            boxShadow: "0 6px 18px rgba(0,0,0,.06)"
-          }}>
-            <div style={{ position: "relative", borderRadius: "10px", overflow: "hidden" }}>
+          <div className="gallery">
+            <div className="main-image-wrap">
               <img
                 src={property.img}
                 alt={`${property.title} Main Image`}
-                style={{ width: "100%", height: "420px", objectFit: "cover", display: "block" }}
               />
-              <span style={{
-                position: "absolute",
-                left: "14px",
-                top: "14px",
-                background: "#0c6d2e",
-                color: "#fff",
-                padding: "6px 10px",
-                borderRadius: "30px",
-                fontSize: ".85rem",
-                fontWeight: 700
-              }}>
-                FEATURED
-              </span>
+              <span className="badge">FEATURED</span>
             </div>
           </div>
 
           {/* Inquiry Box */}
-          <div style={{
-            background: "#fff",
-            padding: "18px",
-            borderRadius: "12px",
-            border: "2px solid #ffd700",
-            boxShadow: "0 6px 18px rgba(0,0,0,.06)"
-          }}>
-            <h3 style={{ fontSize: "1.1rem", color: "#0c6d2e", marginBottom: "12px" }}>Inquire Now</h3>
+          <aside className="inquiry-box">
+            <h3>Inquire Now</h3>
 
-            <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "12px" }}>
-              <div style={{
-                width: "54px",
-                height: "54px",
-                borderRadius: "50%",
-                background: "#149f42",
-                color: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 700
-              }}>
-                R
-              </div>
+            <div className="agent-card">
+              <div className="agent-avatar">R</div>
               <div>
-                <div style={{ fontWeight: 700 }}>Ram Felix Jarabe ✔</div>
-                <div style={{ fontSize: ".9rem", color: "#666" }}>Listed by SouthStar Realty</div>
+                <div className="agent-name">Ram Felix Jarabe ✔</div>
+                <div className="agent-info">Listed by SouthStar Realty</div>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <form onSubmit={handleSubmit}>
               <div>
-                <label style={{ fontWeight: 600, color: "#0c6d2e" }}>Name *</label>
+                <label>Name *</label>
                 <input
                   name="name"
                   type="text"
                   required
                   value={formData.name}
                   onChange={handleChange}
-                  style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "6px", fontFamily: "inherit", fontSize: "1rem" }}
                 />
               </div>
 
               <div>
-                <label style={{ fontWeight: 600, color: "#0c6d2e" }}>Email *</label>
+                <label>Email *</label>
                 <input
                   name="email"
                   type="email"
                   required
                   value={formData.email}
                   onChange={handleChange}
-                  style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "6px", fontFamily: "inherit", fontSize: "1rem" }}
                 />
               </div>
 
               <div>
-                <label style={{ fontWeight: 600, color: "#0c6d2e" }}>Phone</label>
+                <label>Phone</label>
                 <input
                   name="phone"
                   type="tel"
                   value={formData.phone}
                   onChange={handleChange}
-                  style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "6px", fontFamily: "inherit", fontSize: "1rem" }}
                 />
               </div>
 
               <div>
-                <label style={{ fontWeight: 600, color: "#0c6d2e" }}>Message *</label>
+                <label>Message *</label>
                 <textarea
                   name="message"
                   rows={4}
                   required
                   value={formData.message}
                   onChange={handleChange}
-                  style={{ width: "100%", padding: "10px", border: "1px solid #ccc", borderRadius: "6px", fontFamily: "inherit", fontSize: "1rem", resize: "none" }}
                 />
               </div>
 
-              <button
-                type="submit"
-                style={{
-                  background: "linear-gradient(135deg, #ffd700, #f6c600)",
-                  color: "#0c6d2e",
-                  padding: "12px",
-                  borderRadius: "8px",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  border: "none",
-                  marginTop: "6px"
-                }}
-              >
+              <button type="submit" className="buy-btn" style={{ width: "100%" }}>
                 Contact agent
               </button>
             </form>
-          </div>
+          </aside>
         </div>
 
         {/* Property Details */}
-        <section style={{
-          marginTop: "30px",
-          background: "#fff",
-          padding: "24px",
-          borderRadius: "12px",
-          border: "2px solid #ffd700",
-          boxShadow: "0 6px 18px rgba(0,0,0,.06)"
-        }}>
-          <h2 style={{ color: "#0c6d2e", marginBottom: "8px" }}>Property Details</h2>
-          <div style={{ display: "flex", gap: "20px", flexWrap: "wrap", marginBottom: "12px" }}>
+        <section className="details-section">
+          <h2>Property Details</h2>
+          <div className="meta">
             <div><strong>Location:</strong> {property.title}, Oriental Mindoro</div>
             <div><strong>Price:</strong> {placeInfo?.price || "Contact for pricing"}</div>
             <div><strong>Type:</strong> {placeInfo?.type || "Land"}</div>
           </div>
 
-          <h3 style={{ marginTop: "14px", color: "#149f42" }}>Description</h3>
+          <h3>Description</h3>
           <p>
             Prime real estate opportunity in {property.title}, Oriental Mindoro. This property offers excellent value with potential for residential or commercial development.
           </p>
 
-          <h3 style={{ marginTop: "14px", color: "#149f42" }}>Essentials</h3>
-          <ul style={{ marginTop: "8px", listStyle: "disc", marginLeft: "20px" }}>
+          <h3>Essentials</h3>
+          <ul>
             <li>Clean title</li>
             <li>Road accessible</li>
             <li>Near public utilities</li>

@@ -35,21 +35,37 @@ body {
   padding: 28px 0;
   text-align: center;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
-.site-header h1 { font-size: 2rem; font-weight: 700; }
+.site-header h1 { font-size: 2rem; font-weight: 700; margin: 0; }
 .site-header p, .site-header .tag {
   opacity: .95;
   margin-top: 6px;
   font-size: 1rem;
 }
+.header-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px dashed rgba(0,0,0,0.08);
+  background: #fff;
+  display: block;
+}
 
 /* Navigation */
 .tab-nav { background: var(--primary-dark); }
+.nav-row { background: var(--primary-dark); padding: 8px 0; }
 .nav-container {
   display: flex;
   justify-content: center;
   gap: 32px;
   padding: 14px 0;
+  max-width: 1150px;
+  margin: 0 auto;
 }
 .nav-container a {
   color: var(--accent);
@@ -60,6 +76,18 @@ body {
 }
 .nav-container a:hover,
 .nav-container a.active { color: #fff; }
+
+/* Nav with search */
+.nav-search { display: flex; align-items: center; gap: 8px; justify-self: start; }
+.search-box { display: flex; align-items: center; gap: 0; max-width: 420px; }
+.search-left { display: flex; align-items: center; justify-content: center; width: 44px; background: #fff; border: 1px solid #e5e7eb; border-right: none; border-radius: 8px 0 0 8px; padding: 8px; }
+.search-left svg { width: 18px; height: 18px; fill: #6b7280; }
+.search-input { height: 40px; min-width: 220px; background: #fff; border: 1px solid #e5e7eb; padding: 8px 10px; font-weight: 600; border-radius: 0 8px 8px 0; outline: none; font-family: var(--font); }
+.search-btn { height: 40px; background: #3b82f6; color: #fff; padding: 8px 12px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; margin-left: 6px; }
+.search-btn:hover { background: #2563eb; }
+.nav-links { display: flex; gap: 24px; align-items: center; justify-self: start; padding-left: 8px; }
+.nav-links a { color: #ffd700; text-decoration: none; font-weight: 700; padding: 8px 12px; border-radius: 6px; white-space: nowrap; }
+.nav-links a.active { color: #fff; background: rgba(255,255,255,0.03); }
 
 /* Section Title */
 .section-title {
@@ -148,7 +176,7 @@ body {
   justify-content: space-between;
   align-items: center;
 }
-.overlay h3 { font-size: 1.1rem; font-weight: bold; }
+.overlay h3 { font-size: 1.1rem; font-weight: bold; margin: 0; }
 
 /* === Map Section (all pages) === */
 .map-section {
@@ -166,12 +194,47 @@ body {
   color: var(--primary-dark);
   margin-bottom: 16px;
 }
+.map-box { position: relative; }
 .map-box iframe {
   width: 100%;
   height: 420px;
   border: none;
   border-radius: 10px;
 }
+#toggleLayers {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  background: var(--accent);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 700;
+}
+.map-controls {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 30;
+}
+.map-controls button {
+  border: none;
+  background: var(--accent);
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.map-controls button:hover { background: #e5c000; }
 
 /* === Forms (Contact & Inquiry) === */
 form, .form {
@@ -182,9 +245,12 @@ form, .form {
 form label, .form label {
   font-weight: 600;
   color: var(--primary-dark);
+  display: block;
+  margin-bottom: 4px;
 }
 form input, form textarea,
 .form input, .form textarea {
+  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -320,11 +386,34 @@ form button:hover { opacity: 0.9; }
   text-align: center;
   color: #666;
 }
-#year { font-weight: 700; }
+.footer-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.footer-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.footer-text strong { color: var(--text); }
+.footer-text small { color: #666; }
 
 /* Small Tweaks */
+@media (max-width: 900px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .site-header { padding: 18px 16px; }
+}
+
 @media (max-width: 600px) {
   .main-image-wrap img { height: 260px; }
   .thumb { width: 70px; height: 50px; }
   .inquiry-box { order: 2; }
+  .search-input { min-width: 140px; }
 }
