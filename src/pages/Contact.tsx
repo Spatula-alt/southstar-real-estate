@@ -35,11 +35,12 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <>
       {/* Header */}
       <header className="site-header">
-        <h1>SouthStar Realty</h1>
-        <p className="tag">Contact Us</p>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <h1>SouthStar Realty</h1>
+        </Link>
       </header>
 
       {/* Navigation */}
@@ -52,14 +53,14 @@ const Contact = () => {
         </div>
       </nav>
 
-      <main className="wrap main-content flex-1">
+      <main className="wrap main-content">
         <div className="property-overview">
           {/* Contact Form */}
           <article className="property-card">
             <div className="property-details">
               <h2>Contact Us</h2>
 
-              <form onSubmit={handleSubmit} className="form mt-4">
+              <form onSubmit={handleSubmit} style={{ marginTop: "16px" }}>
                 <div>
                   <label htmlFor="name">Name *</label>
                   <input
@@ -113,7 +114,7 @@ const Contact = () => {
 
                 <button type="submit">Send Message</button>
 
-                <p style={{ color: '#666', fontSize: '0.9rem', marginTop: '8px' }}>
+                <p style={{ color: "#666", fontSize: "0.9rem", marginTop: "8px" }}>
                   We reply within 1-2 business days. By sending this message you agree to be contacted regarding your inquiry.
                 </p>
               </form>
@@ -123,34 +124,34 @@ const Contact = () => {
           {/* Office Info */}
           <article className="inquiry-box">
             <h3>Our Office</h3>
-            <div style={{ color: '#666' }}>
-              <p className="mb-2">📍 Calapan City, Oriental Mindoro</p>
-              <p className="mb-2">📞 +63 912 345 6789</p>
+            <div style={{ color: "#666" }}>
+              <p style={{ marginBottom: "8px" }}>📍 Calapan City, Oriental Mindoro</p>
+              <p style={{ marginBottom: "8px" }}>📞 +63 912 345 6789</p>
               <p>
                 📧{" "}
-                <a href="mailto:info@southstarrealty.com" style={{ color: 'var(--primary)' }}>
+                <a href="mailto:info@southstarrealty.com" style={{ color: "var(--primary)" }}>
                   info@southstarrealty.com
                 </a>
               </p>
             </div>
 
-            <h4 style={{ fontWeight: 700, color: 'var(--primary-dark)', marginTop: '16px', marginBottom: '8px' }}>Office Hours</h4>
-            <p style={{ color: '#666' }}>
+            <h4 style={{ fontWeight: 700, color: "var(--primary-dark)", marginTop: "16px", marginBottom: "8px" }}>Office Hours</h4>
+            <p style={{ color: "#666" }}>
               Mon — Fri: 8:30 AM — 5:30 PM
               <br />
               Sat: 9:00 AM — 10:00 AM
             </p>
 
-            <div className="mt-4">
-              <h4 style={{ fontWeight: 700, color: 'var(--primary-dark)', marginBottom: '8px' }}>Quick Links</h4>
+            <div style={{ marginTop: "16px" }}>
+              <h4 style={{ fontWeight: 700, color: "var(--primary-dark)", marginBottom: "8px" }}>Quick Links</h4>
               <div>
-                <p className="mb-1">
-                  <Link to="/" style={{ color: 'var(--primary)' }}>
+                <p style={{ marginBottom: "4px" }}>
+                  <Link to="/" style={{ color: "var(--primary)" }}>
                     View Properties
                   </Link>
                 </p>
                 <p>
-                  <Link to="/about" style={{ color: 'var(--primary)' }}>
+                  <Link to="/about" style={{ color: "var(--primary)" }}>
                     About Us
                   </Link>
                 </p>
@@ -162,9 +163,15 @@ const Contact = () => {
 
       {/* Footer */}
       <footer className="site-footer">
-        <strong>SouthStar Realty</strong> — Reliable • Affordable • Trusted © {new Date().getFullYear()}
+        <div className="footer-brand">
+          <div className="footer-text">
+            <strong>SouthStar Realty</strong>
+            <small>Reliable • Affordable • Trusted</small>
+          </div>
+        </div>
+        <div>© {new Date().getFullYear()}</div>
       </footer>
-    </div>
+    </>
   );
 };
 

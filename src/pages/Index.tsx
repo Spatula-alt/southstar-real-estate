@@ -74,7 +74,7 @@ const Index = () => {
       </div>
 
       {/* Main */}
-      <main className="wrap">
+      <main className="wrap main-content">
         <div className="property-overview">
           {/* Listings */}
           <section className="listings">
@@ -82,7 +82,7 @@ const Index = () => {
               filteredPlaces.map((place) => (
                 <article key={place.id} className="property-card">
                   <img
-                    src={`https://via.placeholder.com/900x300.png?text=${encodeURIComponent(place.name)}`}
+                    src={place.image || `https://via.placeholder.com/900x300.png?text=${encodeURIComponent(place.name)}`}
                     alt={place.name}
                   />
                   <div className="property-details">
@@ -97,7 +97,7 @@ const Index = () => {
                 </article>
               ))
             ) : (
-              <p style={{ color: "var(--muted)", padding: "12px", margin: 0 }}>
+              <p style={{ color: "#666", padding: "12px", margin: 0 }}>
                 No results found.
               </p>
             )}
