@@ -16,6 +16,9 @@ export default {
       fontFamily: {
         outfit: ['Outfit', 'system-ui', '-apple-system', 'sans-serif'],
       },
+      transitionDuration: {
+        '400': '400ms',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
