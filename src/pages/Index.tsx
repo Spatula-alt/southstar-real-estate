@@ -11,10 +11,12 @@ const Index = () => {
   );
 
   const mapTypes: Record<string, string> = {
-    default: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976286.6196348995!2d120.51865817699824!3d12.869857848047245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bb61471e778851%3A0x94f1306262b234f!2sOriental%20Mindoro!5e1!3m2!1sen!2sph!4v1762053902496!5m2!1sen!2sph",
-    satellite: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
-    terrain: "https://www.google.com/maps?q=Oriental+Mindoro&t=p&z=10&output=embed",
-    hybrid: "https://www.google.com/maps?q=Oriental+Mindoro&t=h&z=10&output=embed",
+    Default: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976286.6196348995!2d120.51865817699824!3d12.869857848047245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bb61471e778851%3A0x94f1306262b234f!2sOriental%20Mindoro!5e1!3m2!1sen!2sph!4v1762053902496!5m2!1sen!2sph",
+    Satellite: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
+    Terrain: "https://www.google.com/maps?q=Oriental+Mindoro&t=p&z=10&output=embed",
+    Hybrid: "https://www.google.com/maps?q=Oriental+Mindoro&t=h&z=10&output=embed",
+    Heatmap: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
+    "Street View": "https://www.google.com/maps?q=Oriental+Mindoro&layer=c&z=10&output=embed",
   };
 
   const filteredPlaces = searchQuery.trim()
@@ -41,9 +43,10 @@ const Index = () => {
         <h1>SouthStar Realty</h1>
       </header>
 
-      {/* Nav */}
+      {/* Nav Row */}
       <div className="nav-row">
         <div className="nav-container">
+          {/* Search Box */}
           <div className="nav-search">
             <div className="search-box">
               <div className="search-left">
@@ -54,7 +57,7 @@ const Index = () => {
               <input
                 type="text"
                 className="search-input"
-                placeholder="Search municipality (e.g. Gloria, Naujan)"
+                placeholder="Search municipality (e.g. Gloria"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && setSearchQuery(searchQuery)}
@@ -65,6 +68,7 @@ const Index = () => {
             </button>
           </div>
 
+          {/* Nav Links */}
           <nav className="nav-links">
             <Link to="/popular">POPULAR</Link>
             <Link to="/about">ABOUT US</Link>
@@ -73,16 +77,16 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Main */}
+      {/* Main Content */}
       <main className="wrap main-content">
         <div className="property-overview">
-          {/* Listings */}
+          {/* Property Listings - Left Column */}
           <section className="listings">
             {filteredPlaces.length > 0 ? (
               filteredPlaces.map((place) => (
                 <article key={place.id} className="property-card">
                   <img
-                    src={place.image || `https://via.placeholder.com/900x300.png?text=${encodeURIComponent(place.name)}`}
+                    src={place.image || `https://via.placeholder.com/600x400.png?text=${encodeURIComponent(place.name)}`}
                     alt={place.name}
                   />
                   <div className="property-details">
@@ -103,7 +107,7 @@ const Index = () => {
             )}
           </section>
 
-          {/* Map */}
+          {/* Map Section - Right Column */}
           <section className="map-section">
             <h2>Interactive Google Map</h2>
             <div className="map-box">
@@ -120,7 +124,6 @@ const Index = () => {
                         setMapSrc(value);
                         setShowControls(false);
                       }}
-                      style={{ textTransform: "capitalize" }}
                     >
                       {key}
                     </button>
