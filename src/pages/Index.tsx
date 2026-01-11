@@ -34,7 +34,7 @@ const Index = () => {
   return (
     <>
       {/* Header */}
-      <header className="site-header">
+      <header className="index-header">
         <img
           src="https://th.bing.com/th/id/OIP.2pfvKpHfX1z7Cen5GSLDFQHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
           alt="SouthStar Realty logo"
@@ -78,13 +78,13 @@ const Index = () => {
       </div>
 
       {/* Main Content */}
-      <main className="wrap main-content">
-        <div className="property-overview">
+      <main className="wrap index-content">
+        <div className="index-overview">
           {/* Property Listings - Left Column */}
-          <section className="listings">
+          <section className="index-listings">
             {filteredPlaces.length > 0 ? (
               filteredPlaces.map((place) => (
-                <article key={place.id} className="property-card">
+                <article key={place.id} className="index-card">
                   <img
                     src={place.image || `https://via.placeholder.com/600x400.png?text=${encodeURIComponent(place.name)}`}
                     alt={place.name}
@@ -108,7 +108,7 @@ const Index = () => {
           </section>
 
           {/* Map Section - Right Column */}
-          <section className="map-section">
+          <section className="index-map">
             <h2>Interactive Google Map</h2>
             <div className="map-box">
               <button id="toggleLayers" onClick={() => setShowControls(!showControls)}>
@@ -144,7 +144,7 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="site-footer">
+      <footer className="index-footer">
         <div className="footer-brand">
           <div className="footer-text">
             <strong>SouthStar Realty</strong>
