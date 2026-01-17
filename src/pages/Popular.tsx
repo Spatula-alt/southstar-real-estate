@@ -25,18 +25,18 @@ const Popular = () => {
       <main className="wrap main-content">
         <h2 className="section-title">Municipalities & Cities of Oriental Mindoro</h2>
 
-        <section className="property-grid">
+        <section className="popular-grid">
           {places.map((place) => (
             <div
               key={place.id}
-              className="property-tile"
+              className="popular-tile"
               style={{
                 backgroundImage: `url(${place.image || `https://via.placeholder.com/600x400.png?text=${encodeURIComponent(place.name)}`})`
               }}
             >
-              <div className="overlay">
+              <div className="popular-overlay">
                 <h3>{place.name}</h3>
-                <Link to={`/property?place=${place.id}`} className="view-btn">
+                <Link to={`/property?place=${place.id}`} className="popular-view-btn">
                   View
                 </Link>
               </div>
@@ -46,14 +46,16 @@ const Popular = () => {
       </main>
 
       {/* Footer */}
-      <footer className="site-footer">
-        <div className="footer-brand">
-          <div className="footer-text">
+      <footer className="branded-footer">
+        <div className="footer-content">
+          <div className="footer-brand-section">
             <strong>SouthStar Realty</strong>
             <small>Reliable • Affordable • Trusted</small>
           </div>
+          <div className="footer-copyright">
+            © {new Date().getFullYear()} SouthStar Realty. All Rights Reserved.
+          </div>
         </div>
-        <div>© {new Date().getFullYear()}</div>
       </footer>
     </>
   );

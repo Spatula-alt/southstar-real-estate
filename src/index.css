@@ -150,6 +150,64 @@ body {
 }
 .overlay h3 { font-size: 1.1rem; font-weight: bold; }
 
+/* === Popular Page - 3 Column Grid (like reference image) === */
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 20px 0 50px;
+}
+@media (max-width: 900px) {
+  .popular-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .popular-grid { grid-template-columns: 1fr; }
+}
+.popular-tile {
+  position: relative;
+  height: 140px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  overflow: hidden;
+  filter: grayscale(100%);
+  transition: all 0.4s ease;
+}
+.popular-tile:hover {
+  filter: grayscale(0%);
+  transform: scale(1.02);
+}
+.popular-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.popular-overlay h3 { 
+  font-size: 0.95rem; 
+  font-weight: 600;
+  margin: 0;
+}
+.popular-view-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #222;
+  padding: 5px 14px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.popular-view-btn:hover {
+  background: #fff;
+}
+
 /* === Map Section (all pages) === */
 .map-section {
   background: #fff;
@@ -348,6 +406,39 @@ form button:hover { opacity: 0.9; }
   color: #666;
 }
 #year { font-weight: 700; }
+
+/* Branded Footer (like reference image) */
+.branded-footer {
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+  padding: 30px 20px;
+  margin-top: 40px;
+}
+.branded-footer .footer-content {
+  max-width: 1150px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+.branded-footer .footer-brand-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.branded-footer .footer-brand-section strong {
+  color: #fff;
+  font-size: 1.3rem;
+}
+.branded-footer .footer-brand-section small {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.9rem;
+}
+.branded-footer .footer-copyright {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+}
 
 /* Small Tweaks */
 @media (max-width: 600px) {
