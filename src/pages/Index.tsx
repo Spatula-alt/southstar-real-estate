@@ -5,19 +5,6 @@ import { places } from "@/data/properties";
 const Index = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [showControls, setShowControls] = useState(false);
-  const [mapSrc, setMapSrc] = useState(
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976286.6196348995!2d120.51865817699824!3d12.869857848047245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bb61471e778851%3A0x94f1306262b234f!2sOriental%20Mindoro!5e1!3m2!1sen!2sph!4v1762053902496!5m2!1sen!2sph"
-  );
-
-  const mapTypes: Record<string, string> = {
-    Default: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976286.6196348995!2d120.51865817699824!3d12.869857848047245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33bb61471e778851%3A0x94f1306262b234f!2sOriental%20Mindoro!5e1!3m2!1sen!2sph!4v1762053902496!5m2!1sen!2sph",
-    Satellite: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
-    Terrain: "https://www.google.com/maps?q=Oriental+Mindoro&t=p&z=10&output=embed",
-    Hybrid: "https://www.google.com/maps?q=Oriental+Mindoro&t=h&z=10&output=embed",
-    Heatmap: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
-    "Street View": "https://www.google.com/maps?q=Oriental+Mindoro&layer=c&z=10&output=embed",
-  };
 
   const filteredPlaces = searchQuery.trim()
     ? places.filter(
@@ -111,28 +98,8 @@ const Index = () => {
           <section className="index-map">
             <h2>Interactive Google Map</h2>
             <div className="map-box">
-              <button id="toggleLayers" onClick={() => setShowControls(!showControls)}>
-                Map Layers
-              </button>
-
-              {showControls && (
-                <div className="map-controls">
-                  {Object.entries(mapTypes).map(([key, value]) => (
-                    <button
-                      key={key}
-                      onClick={() => {
-                        setMapSrc(value);
-                        setShowControls(false);
-                      }}
-                    >
-                      {key}
-                    </button>
-                  ))}
-                </div>
-              )}
-
               <iframe
-                src={mapSrc}
+                src="https://www.google.com/maps/d/u/0/embed?mid=1bNTJ1OV14-5_u0mL2T7JeLbpheefugI&ehbc=2E312F&noprof=1"
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
