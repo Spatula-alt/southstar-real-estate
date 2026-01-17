@@ -15,8 +15,6 @@ const Index = () => {
     Satellite: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
     Terrain: "https://www.google.com/maps?q=Oriental+Mindoro&t=p&z=10&output=embed",
     Hybrid: "https://www.google.com/maps?q=Oriental+Mindoro&t=h&z=10&output=embed",
-    Heatmap: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
-    "Street View": "https://www.google.com/maps?q=Oriental+Mindoro&layer=c&z=10&output=embed",
   };
 
   const filteredPlaces = searchQuery.trim()
@@ -144,14 +142,16 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="index-footer">
-        <div className="footer-brand">
-          <div className="footer-text">
+      <footer className="branded-footer">
+        <div className="footer-content">
+          <div className="footer-brand-section">
             <strong>SouthStar Realty</strong>
             <small>Reliable • Affordable • Trusted</small>
           </div>
+          <div className="footer-copyright">
+            © {new Date().getFullYear()} SouthStar Realty. All Rights Reserved.
+          </div>
         </div>
-        <div>© {new Date().getFullYear()}</div>
       </footer>
     </>
   );

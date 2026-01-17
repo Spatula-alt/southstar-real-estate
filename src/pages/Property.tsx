@@ -109,6 +109,7 @@ const Property = () => {
               <img
                 src={property.img}
                 alt={`${property.title} Main Image`}
+                style={{ objectFit: "contain", backgroundColor: "#f0f0f0" }}
               />
               <span className="badge">FEATURED</span>
             </div>
@@ -202,14 +203,16 @@ const Property = () => {
       </main>
 
       {/* Footer */}
-      <footer className="site-footer">
-        <div className="footer-brand">
-          <div className="footer-text">
+      <footer className="branded-footer">
+        <div className="footer-content">
+          <div className="footer-brand-section">
             <strong>SouthStar Realty</strong>
             <small>Reliable • Affordable • Trusted</small>
           </div>
+          <div className="footer-copyright">
+            © {new Date().getFullYear()} SouthStar Realty. All Rights Reserved.
+          </div>
         </div>
-        <div>© {new Date().getFullYear()}</div>
       </footer>
     </>
   );
