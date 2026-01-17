@@ -119,28 +119,19 @@ body {
 /* === Popular Page Grid === */
 .property-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
   padding: 20px 0 50px;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-@media (max-width: 900px) {
-  .property-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 600px) {
-  .property-grid { grid-template-columns: 1fr; }
 }
 .property-tile {
   position: relative;
-  height: 160px;
+  height: 250px;
   background-size: cover;
   background-position: center;
-  border-radius: 10px;
+  border-radius: 8px;
   overflow: hidden;
   filter: grayscale(100%);
   transition: all 0.4s ease;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 .property-tile:hover {
   filter: grayscale(0%);
@@ -148,20 +139,16 @@ body {
 }
 .overlay {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 12px;
+  bottom: 0; left: 0;
+  width: 100%;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.overlay h3 { 
-  font-size: 1rem; 
-  font-weight: bold; 
-  margin: 0 0 6px 0;
-  text-align: center;
-}
+.overlay h3 { font-size: 1.1rem; font-weight: bold; }
 
 /* === Map Section (all pages) === */
 .map-section {
@@ -353,35 +340,12 @@ form button:hover { opacity: 0.9; }
   cursor: pointer;
 }
 
-/* Footer - mirrors header */
+/* Footer */
 .site-footer {
-  background: linear-gradient(90deg, var(--primary-dark), var(--primary));
   padding: 20px 0;
   margin-top: 40px;
   text-align: center;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-}
-.site-footer .footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.site-footer .footer-text {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.2;
-}
-.site-footer .footer-text strong {
-  font-size: 1rem;
-  font-weight: 700;
-}
-.site-footer .footer-text small {
-  font-size: 0.85rem;
-  opacity: 0.9;
+  color: #666;
 }
 #year { font-weight: 700; }
 
