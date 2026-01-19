@@ -165,10 +165,10 @@ body {
 }
 .popular-tile {
   position: relative;
-  height: 140px;
+  height: 160px;
   background-size: cover;
   background-position: center;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   filter: grayscale(100%);
   transition: all 0.4s ease;
@@ -182,27 +182,30 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px 14px;
   background: rgba(0, 0, 0, 0.55);
   color: #fff;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  gap: 6px;
 }
 .popular-overlay h3 { 
-  font-size: 0.95rem; 
+  font-size: 1rem; 
   font-weight: 600;
   margin: 0;
+  text-align: center;
 }
 .popular-view-btn {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   color: #222;
-  padding: 5px 14px;
+  padding: 6px 20px;
   border-radius: 4px;
   font-weight: 600;
   text-decoration: none;
   font-size: 0.85rem;
   transition: background 0.2s;
+  border: 1px solid rgba(0,0,0,0.1);
 }
 .popular-view-btn:hover {
   background: #fff;
@@ -407,37 +410,101 @@ form button:hover { opacity: 0.9; }
 }
 #year { font-weight: 700; }
 
-/* Branded Footer (like reference image) */
-.branded-footer {
-  background: linear-gradient(90deg, var(--primary-dark), var(--primary));
-  padding: 30px 20px;
+/* Ayala-style Footer */
+.ayala-footer {
+  background: linear-gradient(135deg, #0a2e1a 0%, #0c3d22 50%, #0a2e1a 100%);
+  padding: 50px 20px 30px;
   margin-top: 40px;
 }
-.branded-footer .footer-content {
+.ayala-footer .footer-wrap {
   max-width: 1150px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.ayala-footer .footer-left {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  gap: 24px;
+}
+.ayala-footer .social-icons {
+  display: flex;
   gap: 12px;
-  text-align: center;
+  flex-wrap: wrap;
 }
-.branded-footer .footer-brand-section {
+.ayala-footer .social-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  color: #0c3d22;
+  transition: all 0.3s;
 }
-.branded-footer .footer-brand-section strong {
-  color: #fff;
-  font-size: 1.3rem;
+.ayala-footer .social-icon svg {
+  width: 20px;
+  height: 20px;
 }
-.branded-footer .footer-brand-section small {
-  color: rgba(255,255,255,0.85);
-  font-size: 0.9rem;
+.ayala-footer .social-icon:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
 }
-.branded-footer .footer-copyright {
+.ayala-footer .footer-copyright-text {
   color: rgba(255,255,255,0.7);
   font-size: 0.85rem;
+  line-height: 1.6;
+}
+.ayala-footer .footer-copyright-text a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: underline;
+}
+.ayala-footer .footer-copyright-text a:hover {
+  color: #fff;
+}
+.ayala-footer .footer-nav-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.ayala-footer .footer-nav-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ayala-footer .footer-nav-col a {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.ayala-footer .footer-nav-col a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .ayala-footer .footer-wrap {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .ayala-footer .footer-nav-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 500px) {
+  .ayala-footer .footer-nav-columns {
+    grid-template-columns: 1fr;
+  }
+  .ayala-footer .social-icons {
+    justify-content: center;
+  }
+  .ayala-footer .footer-copyright-text {
+    text-align: center;
+  }
 }
 
 /* Small Tweaks */
