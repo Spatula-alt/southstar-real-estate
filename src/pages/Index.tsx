@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { places } from "@/data/properties";
 import AyalaFooter from "@/components/AyalaFooter";
-import southstarLogo from "@/assets/southstar-logo.png";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -34,14 +33,12 @@ const Index = () => {
     <>
       {/* Header */}
       <header className="index-header">
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: "12px", textDecoration: "none", color: "inherit" }}>
-          <img
-            src={southstarLogo}
-            alt="SouthStar Realty logo"
-            className="header-logo"
-          />
-          <h1>SouthStar Realty</h1>
-        </Link>
+        <img
+          src="https://th.bing.com/th/id/OIP.2pfvKpHfX1z7Cen5GSLDFQHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+          alt="SouthStar Realty logo"
+          className="header-logo"
+        />
+        <h1>SouthStar Realty</h1>
       </header>
 
       {/* Nav Row */}
