@@ -1315,3 +1315,52 @@ form button:hover { opacity: 0.9; }
     height: 52px;
   }
 }
+
+/* Testimonials Grid */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 16px;
+}
+@media (max-width: 768px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.testimonial-card {
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.testimonial-stars {
+  margin-bottom: 12px;
+}
+.testimonial-stars .star {
+  color: #ffc107;
+  font-size: 1.2rem;
+  margin-right: 2px;
+}
+.testimonial-text {
+  color: #555;
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.testimonial-author {
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+.testimonial-author .author-name {
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+.testimonial-author .author-role {
+  color: #888;
+  font-size: 0.85rem;
+}
