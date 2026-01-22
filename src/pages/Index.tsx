@@ -33,14 +33,12 @@ const Index = () => {
     <>
       {/* Header */}
       <header className="index-header">
-        <div className="header-brand">
-          <img
-            src="https://th.bing.com/th/id/OIP.2pfvKpHfX1z7Cen5GSLDFQHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
-            alt="SouthStar Realty logo"
-            className="header-logo"
-          />
-          <h1>SouthStar Realty</h1>
-        </div>
+        <img
+          src="https://th.bing.com/th/id/OIP.2pfvKpHfX1z7Cen5GSLDFQHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+          alt="SouthStar Realty logo"
+          className="header-logo"
+        />
+        <h1>SouthStar Realty</h1>
       </header>
 
       {/* Nav Row */}

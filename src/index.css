@@ -31,7 +31,7 @@ body {
 
 /* Header */
 .site-header {
-  background: #1fa951;
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary));
   padding: 28px 0;
   text-align: center;
   color: #fff;
@@ -44,7 +44,7 @@ body {
 }
 
 /* Navigation */
-.tab-nav { background: #1fa951; }
+.tab-nav { background: var(--primary-dark); }
 .nav-container {
   display: flex;
   justify-content: center;
@@ -410,9 +410,9 @@ form button:hover { opacity: 0.9; }
 }
 #year { font-weight: 700; }
 
-/* Ayala-style Footer - Same Green as Header */
+/* Ayala-style Footer - Updated Dark Green */
 .ayala-footer {
-  background: #1fa951;
+  background: #0a3d1f;
   padding: 50px 20px 30px;
   margin-top: 40px;
 }
@@ -442,7 +442,7 @@ form button:hover { opacity: 0.9; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #1fa951;
+  color: #0a3d1f;
   transition: all 0.3s;
   text-decoration: none;
 }
@@ -703,17 +703,12 @@ form button:hover { opacity: 0.9; }
    (Two-column layout with search bar)
    ========================================= */
 .index-header {
-  background: #1fa951;
+  background: linear-gradient(90deg, var(--primary-dark), var(--primary));
   padding: 18px 0;
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-}
-.index-header .header-brand {
-  display: flex;
-  align-items: center;
   gap: 12px;
 }
 .index-header h1 { font-size: 1.25rem; font-weight: 700; margin: 0; }
@@ -728,7 +723,7 @@ form button:hover { opacity: 0.9; }
 }
 
 /* Index Nav Row */
-.nav-row { background: #1fa951; padding: 8px 0; }
+.nav-row { background: #0b6a28; padding: 8px 0; }
 .nav-row .nav-container {
   max-width: 1100px;
   margin: 0 auto;
