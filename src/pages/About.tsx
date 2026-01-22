@@ -1,12 +1,41 @@
 import { Link } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
+import southstarLogo from "@/assets/southstar-logo.png";
 
 const About = () => {
+  const testimonials = [
+    {
+      text: "SouthStar Realty helped us find our dream lot in Pinamalayan within our budget. The entire process was transparent and hassle-free. Highly recommended!",
+      author: "Maria Santos-Dela Cruz",
+      role: "Homeowner, Pinamalayan",
+      rating: 5
+    },
+    {
+      text: "As an OFW, buying land from abroad seemed impossible. SouthStar handled everything professionally - documentation, site visits, and kept me updated every step of the way.",
+      author: "Roberto Garcia",
+      role: "OFW Investor, Dubai",
+      rating: 5
+    },
+    {
+      text: "We purchased agricultural land in Gloria for our retirement farm. The team's local knowledge helped us avoid problematic titles. Very trustworthy!",
+      author: "Engr. Antonio & Lilia Reyes",
+      role: "Retired Couple, Gloria",
+      rating: 5
+    },
+    {
+      text: "Fast, honest, and very accommodating. They helped me secure a commercial lot in Calapan City with complete documents. Best real estate experience in Mindoro!",
+      author: "Jennifer Castillo-Lim",
+      role: "Business Owner, Calapan",
+      rating: 5
+    },
+  ];
+
   return (
     <>
       {/* Header */}
       <header className="site-header">
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "12px" }}>
+          <img src={southstarLogo} alt="SouthStar Realty logo" className="header-logo" />
           <h1>SouthStar Realty</h1>
         </Link>
       </header>
@@ -152,15 +181,18 @@ const About = () => {
         {/* Testimonials */}
         <section style={{ marginTop: "20px" }}>
           <h2 className="section-title" style={{ textAlign: "left" }}>What Our Clients Say</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "8px" }}>
-            {[
-              { text: "SouthStar Realty made my dream lot in Pinamalayan possible. Honest service and smooth process!", author: "Maria D." },
-              { text: "Reliable and professional. They helped me secure farmland with clear documents and no hassle.", author: "Roberto G." },
-            ].map((testimonial, i) => (
-              <article key={i} className="property-card">
-                <div className="property-details">
-                  <p style={{ color: "#666", fontStyle: "italic" }}>"{testimonial.text}"</p>
-                  <p style={{ color: "var(--primary-dark)", fontWeight: 600, marginTop: "8px" }}>- {testimonial.author}</p>
+          <div className="testimonials-grid">
+            {testimonials.map((testimonial, i) => (
+              <article key={i} className="testimonial-card">
+                <div className="testimonial-stars">
+                  {[...Array(testimonial.rating)].map((_, starIdx) => (
+                    <span key={starIdx} className="star">★</span>
+                  ))}
+                </div>
+                <p className="testimonial-text">"{testimonial.text}"</p>
+                <div className="testimonial-author">
+                  <p className="author-name">{testimonial.author}</p>
+                  <p className="author-role">{testimonial.role}</p>
                 </div>
               </article>
             ))}
