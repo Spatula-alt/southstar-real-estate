@@ -9,7 +9,6 @@ import Popular from "./pages/Popular";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Information from "./pages/Information";
-import OrientalMindoro from "./pages/OrientalMindoro";
 import NotFound from "./pages/NotFound";
 import Chatbot from "./components/Chatbot";
 
@@ -28,7 +27,6 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/information" element={<Information />} />
-          <Route path="/oriental-mindoro" element={<OrientalMindoro />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Chatbot />
