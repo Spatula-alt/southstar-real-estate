@@ -1315,3 +1315,105 @@ form button:hover { opacity: 0.9; }
     height: 52px;
   }
 }
+
+/* === Oriental Mindoro Page === */
+.om-hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.om-intro {
+  max-width: 750px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.7;
+}
+.om-section {
+  margin-bottom: 50px;
+}
+.om-section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 24px;
+  text-align: center;
+}
+.om-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.om-card {
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,.06);
+  transition: transform 0.3s;
+}
+.om-card:hover { transform: translateY(-4px); }
+.om-card-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.om-card h4 { color: var(--primary-dark); font-size: 1.1rem; margin-bottom: 8px; }
+.om-card p { font-size: 0.92rem; color: #555; }
+
+.om-connection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.om-connection-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: #fff;
+  padding: 20px 24px;
+  border-radius: 12px;
+  border-left: 4px solid var(--primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,.04);
+}
+.om-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+  min-width: 48px;
+}
+.om-connection-item h4 { color: var(--primary-dark); margin-bottom: 4px; }
+.om-connection-item p { font-size: 0.92rem; color: #555; }
+
+.om-municipalities {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+.om-muni-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s;
+}
+.om-muni-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 4px 12px rgba(20,159,66,.12);
+}
+.om-muni-card h4 { color: var(--primary-dark); font-size: 1rem; margin-bottom: 4px; }
+.om-muni-desc { font-size: 0.85rem; color: #666; margin-bottom: 6px; }
+.om-muni-price {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.95rem;
+}
+
+.om-cta {
+  text-align: center;
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: #fff;
+  padding: 40px 24px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+.om-cta h3 { font-size: 1.5rem; margin-bottom: 8px; }
+.om-cta p { opacity: 0.9; margin-bottom: 20px; }
+.om-cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.om-cta .buy-btn, .om-cta .view-btn { font-size: 1rem; padding: 12px 28px; }
