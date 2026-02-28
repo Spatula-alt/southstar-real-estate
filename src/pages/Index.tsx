@@ -86,6 +86,8 @@ const Index = () => {
                   <img
                     src={place.image || `https://via.placeholder.com/600x400.png?text=${encodeURIComponent(place.name)}`}
                     alt={place.name}
+                    style={{ cursor: "pointer" }}
+                    onClick={(e) => { e.stopPropagation(); window.open(place.image, "_blank"); }}
                   />
                   <div className="property-details">
                     <div>

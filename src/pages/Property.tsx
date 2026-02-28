@@ -119,7 +119,7 @@ const Property = () => {
           <div className="property-main-content">
             {/* Gallery */}
             <div className="gallery">
-              <div className="main-image-wrap">
+              <div className="main-image-wrap" style={{ cursor: "pointer" }} onClick={() => window.open(property.img, "_blank")}>
                 <img
                   src={property.img}
                   alt={`${property.title} Main Image`}
@@ -160,7 +160,7 @@ const Property = () => {
             <div className="agent-card">
               <div className="agent-avatar">R</div>
               <div>
-                <div className="agent-name">Ram Felix Jarabe ✔</div>
+                <div className="agent-name">Jarabe Ram Felix ✔</div>
                 <div className="agent-info">Listed by SouthStar Realty</div>
               </div>
             </div>
@@ -226,7 +226,7 @@ const Property = () => {
                 className="recommendation-card"
                 onClick={() => navigate(`/property?place=${place.id}`)}
               >
-                <img src={place.image} alt={place.name} />
+                <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
                 <div className="recommendation-details">
                   <h4>{place.name}</h4>
                   <p>{place.price} · {place.type}</p>
