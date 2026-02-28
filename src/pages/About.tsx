@@ -154,13 +154,24 @@ const About = () => {
           <h2 className="section-title" style={{ textAlign: "left" }}>What Our Clients Say</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "8px" }}>
             {[
-              { text: "SouthStar Realty made my dream lot in Pinamalayan possible. Honest service and smooth process!", author: "Maria D." },
-              { text: "Reliable and professional. They helped me secure farmland with clear documents and no hassle.", author: "Roberto G." },
+              { text: "Bought a 500sqm lot in Pinamalayan through SouthStar. The title was clean and transfer was done in just 3 weeks. Very smooth!", author: "Maria Dela Cruz", role: "Homeowner, Pinamalayan", avatar: "👩", stars: 5 },
+              { text: "As an OFW, it was hard to buy land remotely. SouthStar handled everything — documents, verification, even site photos. Highly recommend!", author: "Roberto Garcia", role: "OFW Investor, Gloria", avatar: "👨", stars: 5 },
+              { text: "I was skeptical at first but Sir Ram was very patient explaining every step. Got my farmland in Bansud at a great price. Legit sila!", author: "Jenny Santos", role: "Farmer, Bansud", avatar: "👩‍🌾", stars: 5 },
+              { text: "SouthStar helped me find a commercial lot near the highway in Calapan. Professional service from consultation to final paperwork.", author: "Mark Anthony Reyes", role: "Business Owner, Calapan", avatar: "👨‍💼", stars: 4 },
             ].map((testimonial, i) => (
-              <article key={i} className="property-card">
-                <div className="property-details">
-                  <p style={{ color: "#666", fontStyle: "italic" }}>"{testimonial.text}"</p>
-                  <p style={{ color: "var(--primary-dark)", fontWeight: 600, marginTop: "8px" }}>- {testimonial.author}</p>
+              <article key={i} className="property-card" style={{ padding: 0 }}>
+                <div className="property-details" style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+                  <div style={{ fontSize: "2.5rem", minWidth: "50px", height: "50px", borderRadius: "50%", background: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    {testimonial.avatar}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ color: "#f59e0b", fontSize: "0.9rem", marginBottom: "4px" }}>
+                      {"★".repeat(testimonial.stars)}{"☆".repeat(5 - testimonial.stars)}
+                    </div>
+                    <p style={{ color: "#555", fontStyle: "italic", fontSize: "0.92rem", lineHeight: 1.5 }}>"{testimonial.text}"</p>
+                    <p style={{ color: "var(--primary-dark)", fontWeight: 700, marginTop: "8px", fontSize: "0.95rem" }}>{testimonial.author}</p>
+                    <p style={{ color: "#888", fontSize: "0.8rem" }}>{testimonial.role}</p>
+                  </div>
                 </div>
               </article>
             ))}
