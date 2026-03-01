@@ -9,6 +9,8 @@ import Popular from "./pages/Popular";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Information from "./pages/Information";
+import Agents from "./pages/Agents";
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Chatbot from "./components/Chatbot";
 
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/popular" element={<Popular />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/agents" element={<Agents />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/information" element={<Information />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

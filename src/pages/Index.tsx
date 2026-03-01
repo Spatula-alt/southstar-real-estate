@@ -71,6 +71,8 @@ const Index = () => {
             <Link to="/popular">POPULAR</Link>
             <Link to="/about">ABOUT US</Link>
             <Link to="/contact">CONTACT</Link>
+            <Link to="/agents">AGENTS</Link>
+            <Link to="/login">LOG IN</Link>
           </nav>
         </div>
       </div>
