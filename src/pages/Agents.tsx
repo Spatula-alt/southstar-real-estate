@@ -1,21 +1,6 @@
 import { Link } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
-
-const agents = [
-  { name: "Jarabe Ram Felix", role: "Owner / Lead Broker", avatar: "👨‍💼", color: "#149f42" },
-  { name: "Ed Tenorio", role: "Senior Agent", avatar: "👔", color: "#0c6d2e" },
-  { name: "Derek Grey", role: "Property Specialist", avatar: "🧑‍💼", color: "#1a7a3a" },
-  { name: "Lean", role: "Sales Associate", avatar: "👨", color: "#2a8f4a" },
-  { name: "Erwin Sia", role: "Licensed Broker", avatar: "🤵", color: "#0c6d2e" },
-  { name: "Bill Ernest Ti Yu", role: "Investment Advisor", avatar: "👨‍💻", color: "#149f42" },
-  { name: "Kaye Manalo", role: "Client Relations", avatar: "👩‍💼", color: "#1a7a3a" },
-  { name: "Marielle Bundoc", role: "Documentation Head", avatar: "👩", color: "#2a8f4a" },
-  { name: "Paul Macasaet", role: "Senior Agent", avatar: "🧑‍💼", color: "#0c6d2e" },
-  { name: "Manny Daez", role: "Field Agent", avatar: "👔", color: "#149f42" },
-  { name: "Nori Ono", role: "Property Specialist", avatar: "🤵", color: "#1a7a3a" },
-  { name: "Janina Guina", role: "Marketing Lead", avatar: "👩‍💼", color: "#2a8f4a" },
-  { name: "Matthew Kevin", role: "Sales Associate", avatar: "👨‍💻", color: "#0c6d2e" },
-];
+import { agents } from "@/data/agents";
 
 const Agents = () => {
   return (
@@ -44,8 +29,8 @@ const Agents = () => {
         </p>
 
         <div className="agents-grid">
-          {agents.map((agent, i) => (
-            <div key={i} className="agent-profile-card">
+          {agents.map((agent) => (
+            <Link to={`/agents/${agent.id}`} key={agent.id} className="agent-profile-card agent-card-link">
               <div className="agent-profile-avatar" style={{ background: agent.color }}>
                 <span>{agent.avatar}</span>
               </div>
@@ -54,11 +39,10 @@ const Agents = () => {
               {agent.name === "Jarabe Ram Felix" && (
                 <span className="agent-badge">★ Owner</span>
               )}
-            </div>
+            </Link>
           ))}
         </div>
 
-        {/* CTA */}
         <section className="property-card" style={{ marginTop: "40px" }}>
           <div className="property-details" style={{ textAlign: "center" }}>
             <h3>Want to Join Our Team?</h3>

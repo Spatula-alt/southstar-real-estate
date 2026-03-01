@@ -1452,6 +1452,109 @@ form button:hover { opacity: 0.9; }
   }
 }
 
+/* === Agent Card Link === */
+.agent-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* === Agent Profile Detail Page === */
+.agent-detail {
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+.agent-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 32px;
+  background: linear-gradient(135deg, #f0faf3, #e8f5ec);
+  border-bottom: 1px solid #e0e0e0;
+}
+.agent-detail-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+.agent-detail-avatar span { font-size: 3.2rem; }
+.agent-detail-info h2 {
+  font-size: 1.6rem;
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+}
+.agent-detail-role {
+  font-size: 1rem;
+  color: #666;
+  font-weight: 600;
+}
+.agent-detail-body {
+  padding: 32px;
+}
+.agent-detail-section {
+  margin-bottom: 28px;
+}
+.agent-detail-section h3 {
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  font-weight: 700;
+  margin-bottom: 12px;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 6px;
+  display: inline-block;
+}
+.agent-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.agent-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #444;
+}
+.agent-contact-icon { font-size: 1.2rem; }
+.agent-description {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.7;
+}
+.agent-specialties {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.agent-specialty-tag {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .agent-detail-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  .agent-detail-body { padding: 20px; }
+}
+
 /* === Oriental Mindoro Page === */
 .om-hero {
   text-align: center;
