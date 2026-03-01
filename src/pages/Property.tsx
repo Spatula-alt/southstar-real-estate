@@ -216,24 +216,42 @@ const Property = () => {
           </aside>
         </div>
 
-        {/* Recommendations Section */}
+        {/* Recommendations Section - Scrolling Animation */}
         <section className="recommendations-section">
-          <h2 className="section-title">Recommended Properties</h2>
-          <div className="recommendations-grid">
-            {recommendations.map((place) => place && (
-              <article 
-                key={place.id} 
-                className="recommendation-card"
-                onClick={() => navigate(`/property?place=${place.id}`)}
-              >
-                <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
-                <div className="recommendation-details">
-                  <h4>{place.name}</h4>
-                  <p>{place.price} · {place.type}</p>
-                  <button className="view-btn">View Property</button>
-                </div>
-              </article>
-            ))}
+          <h2 className="section-title">Suggested Properties</h2>
+          <div className="recommendations-carousel">
+            <div className="recommendations-track">
+              {/* First set */}
+              {recommendations.map((place) => place && (
+                <article 
+                  key={`first-${place.id}`} 
+                  className="recommendation-card"
+                  onClick={() => navigate(`/property?place=${place.id}`)}
+                >
+                  <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
+                  <div className="recommendation-details">
+                    <h4>{place.name}</h4>
+                    <p>{place.price} · {place.type}</p>
+                    <button className="view-btn">View Property</button>
+                  </div>
+                </article>
+              ))}
+              {/* Duplicate for seamless loop */}
+              {recommendations.map((place) => place && (
+                <article 
+                  key={`second-${place.id}`} 
+                  className="recommendation-card"
+                  onClick={() => navigate(`/property?place=${place.id}`)}
+                >
+                  <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
+                  <div className="recommendation-details">
+                    <h4>{place.name}</h4>
+                    <p>{place.price} · {place.type}</p>
+                    <button className="view-btn">View Property</button>
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </main>
