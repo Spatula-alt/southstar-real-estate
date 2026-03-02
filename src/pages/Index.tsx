@@ -2,20 +2,13 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { places } from "@/data/properties";
 import AyalaFooter from "@/components/AyalaFooter";
+import BuyAbilityWidget from "@/components/BuyAbilityWidget";
+import MunicipalityMap from "@/components/MunicipalityMap";
+import MobileDrawer from "@/components/MobileDrawer";
 
 const Index = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [showControls, setShowControls] = useState(false);
-  const [mapSrc, setMapSrc] = useState(
-    "https://www.google.com/maps/d/u/0/embed?mid=1bNTJ1OV14-5_u0mL2T7JeLbpheefugI&ehbc=2E312F&noprof=1"
-  );
-
-  const mapTypes: Record<string, string> = {
-    Default: "https://www.google.com/maps/d/u/0/embed?mid=1bNTJ1OV14-5_u0mL2T7JeLbpheefugI&ehbc=2E312F&noprof=1",
-    Satellite: "https://www.google.com/maps?q=Oriental+Mindoro&t=k&z=10&output=embed",
-    Terrain: "https://www.google.com/maps?q=Oriental+Mindoro&t=p&z=10&output=embed",
-  };
 
   const filteredPlaces = searchQuery.trim()
     ? places.filter(
@@ -39,12 +32,12 @@ const Index = () => {
           className="header-logo"
         />
         <h1>SouthStar Realty</h1>
+        <MobileDrawer />
       </header>
 
       {/* Nav Row */}
       <div className="nav-row">
         <div className="nav-container">
-          {/* Search Box */}
           <div className="nav-search">
             <div className="search-box">
               <div className="search-left">
@@ -66,8 +59,7 @@ const Index = () => {
             </button>
           </div>
 
-          {/* Nav Links */}
-          <nav className="nav-links">
+          <nav className="nav-links desktop-nav">
             <Link to="/popular">POPULAR</Link>
             <Link to="/about">ABOUT US</Link>
             <Link to="/contact">CONTACT</Link>
@@ -79,6 +71,9 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="wrap index-content">
+        {/* BuyAbility Widget */}
+        <BuyAbilityWidget />
+
         <div className="index-overview">
           {/* Property Listings - Left Column */}
           <section className="index-listings">
@@ -109,38 +104,10 @@ const Index = () => {
             )}
           </section>
 
-          {/* Map Section - Right Column */}
+          {/* Interactive Leaflet Map - Right Column */}
           <section className="index-map">
-            <h2>Interactive Google Map</h2>
-            <div className="map-box">
-              <button id="toggleLayers" onClick={() => setShowControls(!showControls)}>
-                Map Layers
-              </button>
-
-              {showControls && (
-                <div className="map-controls">
-                  {Object.entries(mapTypes).map(([key, value]) => (
-                    <button
-                      key={key}
-                      onClick={() => {
-                        setMapSrc(value);
-                        setShowControls(false);
-                      }}
-                    >
-                      {key}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              <iframe
-                src={mapSrc}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Oriental Mindoro Map"
-              />
-            </div>
+            <h2>Interactive Map of Oriental Mindoro</h2>
+            <MunicipalityMap />
           </section>
         </div>
       </main>

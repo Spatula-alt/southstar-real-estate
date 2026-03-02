@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
 import { agents } from "@/data/agents";
+import { getAgentAvatarUrl } from "@/utils/avatarSeed";
 
 const AgentProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -10,18 +11,12 @@ const AgentProfile = () => {
     return (
       <>
         <header className="site-header">
-          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-            <h1>SouthStar Realty</h1>
-          </Link>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
         </header>
         <nav className="tab-nav">
           <div className="nav-container">
-            <Link to="/">PROPERTIES</Link>
-            <Link to="/popular">POPULAR</Link>
-            <Link to="/about">ABOUT US</Link>
-            <Link to="/contact">CONTACT</Link>
-            <Link to="/agents" className="active">AGENTS</Link>
-            <Link to="/login">LOG IN</Link>
+            <Link to="/">PROPERTIES</Link><Link to="/popular">POPULAR</Link><Link to="/about">ABOUT US</Link>
+            <Link to="/contact">CONTACT</Link><Link to="/agents" className="active">AGENTS</Link><Link to="/login">LOG IN</Link>
           </div>
         </nav>
         <main className="wrap main-content" style={{ textAlign: "center", padding: "60px 20px" }}>
@@ -37,28 +32,23 @@ const AgentProfile = () => {
   return (
     <>
       <header className="site-header">
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>SouthStar Realty</h1>
-        </Link>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
       </header>
-
       <nav className="tab-nav">
         <div className="nav-container">
-          <Link to="/">PROPERTIES</Link>
-          <Link to="/popular">POPULAR</Link>
-          <Link to="/about">ABOUT US</Link>
-          <Link to="/contact">CONTACT</Link>
-          <Link to="/agents" className="active">AGENTS</Link>
-          <Link to="/login">LOG IN</Link>
+          <Link to="/">PROPERTIES</Link><Link to="/popular">POPULAR</Link><Link to="/about">ABOUT US</Link>
+          <Link to="/contact">CONTACT</Link><Link to="/agents" className="active">AGENTS</Link><Link to="/login">LOG IN</Link>
         </div>
       </nav>
 
       <main className="wrap main-content">
         <div className="agent-detail">
           <div className="agent-detail-header">
-            <div className="agent-detail-avatar" style={{ background: agent.color }}>
-              <span>{agent.avatar}</span>
-            </div>
+            <img
+              src={getAgentAvatarUrl(agent.name, 150)}
+              alt={agent.name}
+              className="agent-detail-photo"
+            />
             <div className="agent-detail-info">
               <h2>{agent.name}</h2>
               <p className="agent-detail-role">{agent.role}</p>
@@ -73,16 +63,10 @@ const AgentProfile = () => {
               <h3>Contact Information</h3>
               <div className="agent-contact-list">
                 {agent.phone && (
-                  <div className="agent-contact-item">
-                    <span className="agent-contact-icon">📞</span>
-                    <span>{agent.phone}</span>
-                  </div>
+                  <div className="agent-contact-item"><span className="agent-contact-icon">📞</span><span>{agent.phone}</span></div>
                 )}
                 {agent.email && (
-                  <div className="agent-contact-item">
-                    <span className="agent-contact-icon">✉️</span>
-                    <span>{agent.email}</span>
-                  </div>
+                  <div className="agent-contact-item"><span className="agent-contact-icon">✉️</span><span>{agent.email}</span></div>
                 )}
               </div>
             </div>

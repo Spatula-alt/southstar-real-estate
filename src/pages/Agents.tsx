@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
 import { agents } from "@/data/agents";
+import { getAgentAvatarUrl } from "@/utils/avatarSeed";
 
 const Agents = () => {
   return (
@@ -31,9 +32,11 @@ const Agents = () => {
         <div className="agents-grid">
           {agents.map((agent) => (
             <Link to={`/agents/${agent.id}`} key={agent.id} className="agent-profile-card agent-card-link">
-              <div className="agent-profile-avatar" style={{ background: agent.color }}>
-                <span>{agent.avatar}</span>
-              </div>
+              <img
+                src={getAgentAvatarUrl(agent.name, 80)}
+                alt={agent.name}
+                className="agent-photo-avatar"
+              />
               <h3>{agent.name}</h3>
               <p>{agent.role}</p>
               {agent.name === "Jarabe Ram Felix" && (

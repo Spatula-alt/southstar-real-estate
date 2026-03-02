@@ -3,6 +3,8 @@ import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { places } from "@/data/properties";
 import { toast } from "@/hooks/use-toast";
 import AyalaFooter from "@/components/AyalaFooter";
+import PropertyOverview from "@/components/PropertyOverview";
+import SharePanel from "@/components/SharePanel";
 
 const propertyData: Record<string, { title: string; map: string; img: string }> = {
   puertogalera: { title: "Puerto Galera", map: "https://www.google.com/maps?q=Puerto+Galera+Oriental+Mindoro&z=12&output=embed", img: "https://www.travelorientalmindoro.ph/Content/img/uploads/3997051e-5e30-4aff-9f65-cc33f90d3b6b_thumb.jpg" },
@@ -22,14 +24,9 @@ const propertyData: Record<string, { title: string; map: string; img: string }> 
   bulalacao: { title: "Bulalacao", map: "https://www.google.com/maps?q=Bulalacao+Oriental+Mindoro&z=12&output=embed", img: "https://i.ytimg.com/vi/FLC25tWhUD8/maxresdefault.jpg" }
 };
 
-// Recommended properties based on current location
 const getRecommendations = (currentPlaceId: string) => {
   const recommendedIds = ['pinamalayan', 'calapan', 'gloria', 'bansud', 'bongabong'];
-  return recommendedIds
-    .filter(id => id !== currentPlaceId)
-    .slice(0, 4)
-    .map(id => places.find(p => p.id === id))
-    .filter(Boolean);
+  return recommendedIds.filter(id => id !== currentPlaceId).slice(0, 4).map(id => places.find(p => p.id === id)).filter(Boolean);
 };
 
 const Property = () => {
@@ -40,30 +37,15 @@ const Property = () => {
   const placeInfo = places.find((p) => p.id === placeId);
   const recommendations = getRecommendations(placeId);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: "Please fill in all required fields.", variant: "destructive" });
       return;
     }
-
-    toast({
-      title: "Inquiry Sent!",
-      description: `Thanks ${formData.name}! Your inquiry for ${property.title} has been recorded.`,
-    });
-
+    toast({ title: "Inquiry Sent!", description: `Thanks ${formData.name}! Your inquiry for ${property.title} has been recorded.` });
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
@@ -73,63 +55,30 @@ const Property = () => {
 
   return (
     <>
-      {/* Header */}
       <header className="site-header" style={{ position: "relative" }}>
-        <button
-          id="backBtn"
-          onClick={() => navigate(-1)}
-          style={{
-            position: "absolute",
-            top: "16px",
-            left: "16px",
-            background: "#FFD700",
-            border: "none",
-            borderRadius: "6px",
-            padding: "8px 12px",
-            cursor: "pointer",
-            fontWeight: 700,
-            zIndex: 20
-          }}
-        >
-          ← Back
-        </button>
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>SouthStar Realty</h1>
-        </Link>
+        <button id="backBtn" onClick={() => navigate(-1)} style={{ position: "absolute", top: "16px", left: "16px", background: "#FFD700", border: "none", borderRadius: "6px", padding: "8px 12px", cursor: "pointer", fontWeight: 700, zIndex: 20 }}>← Back</button>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
       </header>
 
-      {/* Main */}
       <main className="wrap main-content">
-        {/* Map Section */}
+        {/* Map */}
         <section className="map-section">
           <h2 id="propertyTitle">{property.title}</h2>
           <div className="map-box">
-            <iframe
-              src={property.map}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Property Location Map"
-            />
+            <iframe src={property.map} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Property Location Map" />
           </div>
         </section>
 
-        {/* Property Overview - Two Column Layout */}
+        {/* Two Column Layout */}
         <div className="property-page-layout">
-          {/* Left: Gallery + Details */}
           <div className="property-main-content">
-            {/* Gallery */}
             <div className="gallery">
               <div className="main-image-wrap" style={{ cursor: "pointer" }} onClick={() => window.open(property.img, "_blank")}>
-                <img
-                  src={property.img}
-                  alt={`${property.title} Main Image`}
-                  style={{ objectFit: "contain", backgroundColor: "#f0f0f0" }}
-                />
+                <img src={property.img} alt={`${property.title} Main Image`} style={{ objectFit: "contain", backgroundColor: "#f0f0f0" }} />
                 <span className="badge">FEATURED</span>
               </div>
             </div>
 
-            {/* Property Details */}
             <section className="details-section">
               <h2>Property Details</h2>
               <div className="meta">
@@ -137,12 +86,8 @@ const Property = () => {
                 <div><strong>Price:</strong> {placeInfo?.price || "Contact for pricing"}</div>
                 <div><strong>Type:</strong> {placeInfo?.type || "Land"}</div>
               </div>
-
               <h3>Description</h3>
-              <p>
-                Prime real estate opportunity in {property.title}, Oriental Mindoro. This property offers excellent value with potential for residential or commercial development.
-              </p>
-
+              <p>Prime real estate opportunity in {property.title}, Oriental Mindoro. This property offers excellent value with potential for residential or commercial development.</p>
               <h3>Essentials</h3>
               <ul>
                 <li>Clean title</li>
@@ -151,83 +96,43 @@ const Property = () => {
                 <li>Flexible payment terms available</li>
               </ul>
             </section>
+
+            {/* Property Overview Table */}
+            <PropertyOverview title={property.title} type={placeInfo?.type || "Lot"} price={placeInfo?.price || ""} placeId={placeId} />
           </div>
 
-          {/* Right: Inquiry Box */}
-          <aside className="inquiry-box-fixed">
-            <h3>Inquire Now</h3>
-
-            <div className="agent-card">
-              <div className="agent-avatar">R</div>
-              <div>
-                <div className="agent-name">Jarabe Ram Felix ✔</div>
-                <div className="agent-info">Listed by SouthStar Realty</div>
+          {/* Right Sidebar */}
+          <div>
+            <aside className="inquiry-box-fixed">
+              <h3>Inquire Now</h3>
+              <div className="agent-card">
+                <div className="agent-avatar">R</div>
+                <div>
+                  <div className="agent-name">Jarabe Ram Felix ✔</div>
+                  <div className="agent-info">Listed by SouthStar Realty</div>
+                </div>
               </div>
-            </div>
+              <form onSubmit={handleSubmit}>
+                <div className="form-group"><label>Name *</label><input name="name" type="text" required value={formData.name} onChange={handleChange} /></div>
+                <div className="form-group"><label>Email *</label><input name="email" type="email" required value={formData.email} onChange={handleChange} /></div>
+                <div className="form-group"><label>Phone</label><input name="phone" type="tel" value={formData.phone} onChange={handleChange} /></div>
+                <div className="form-group"><label>Message *</label><textarea name="message" rows={4} required value={formData.message} onChange={handleChange} /></div>
+                <button type="submit" className="contact-agent-btn">Contact agent</button>
+              </form>
+            </aside>
 
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Name *</label>
-                <input
-                  name="name"
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email *</label>
-                <input
-                  name="email"
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Phone</label>
-                <input
-                  name="phone"
-                  type="tel"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Message *</label>
-                <textarea
-                  name="message"
-                  rows={4}
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <button type="submit" className="contact-agent-btn">
-                Contact agent
-              </button>
-            </form>
-          </aside>
+            {/* Share & Actions Panel */}
+            <SharePanel title={`${property.title} - SouthStar Realty`} />
+          </div>
         </div>
 
-        {/* Recommendations Section - Scrolling Animation */}
+        {/* Scrolling Recommendations */}
         <section className="recommendations-section">
           <h2 className="section-title">Suggested Properties</h2>
           <div className="recommendations-carousel">
             <div className="recommendations-track">
-              {/* First set */}
               {recommendations.map((place) => place && (
-                <article 
-                  key={`first-${place.id}`} 
-                  className="recommendation-card"
-                  onClick={() => navigate(`/property?place=${place.id}`)}
-                >
+                <article key={`first-${place.id}`} className="recommendation-card" onClick={() => navigate(`/property?place=${place.id}`)}>
                   <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
                   <div className="recommendation-details">
                     <h4>{place.name}</h4>
@@ -236,13 +141,8 @@ const Property = () => {
                   </div>
                 </article>
               ))}
-              {/* Duplicate for seamless loop */}
               {recommendations.map((place) => place && (
-                <article 
-                  key={`second-${place.id}`} 
-                  className="recommendation-card"
-                  onClick={() => navigate(`/property?place=${place.id}`)}
-                >
+                <article key={`second-${place.id}`} className="recommendation-card" onClick={() => navigate(`/property?place=${place.id}`)}>
                   <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
                   <div className="recommendation-details">
                     <h4>{place.name}</h4>
