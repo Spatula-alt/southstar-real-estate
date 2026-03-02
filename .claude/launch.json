@@ -1,12 +1,12 @@
 {
   "version": "0.1",
-  "configurations": [
+  "launches": [
     {
-      "name": "vite-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "name": "SouthStar Dev Server",
+      "command": "npm run dev",
       "port": 8080,
-      "protocol": "http"
+      "protocol": "http",
+      "isDefault": true
     }
   ]
 }
