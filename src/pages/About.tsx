@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
+import { getAvatarUrl } from "@/utils/avatarSeed";
 
 const About = () => {
   return (
     <>
-      {/* Header */}
       <header className="site-header">
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <h1>SouthStar Realty</h1>
         </Link>
       </header>
 
-      {/* Navigation */}
       <nav className="tab-nav">
         <div className="nav-container">
           <Link to="/">PROPERTIES</Link>
@@ -94,7 +93,6 @@ const About = () => {
           <h2 className="section-title" style={{ textAlign: "left" }}>Our Core Values</h2>
           <div className="core-values-carousel">
             <div className="core-values-track">
-              {/* First set */}
               {[
                 { title: "Trust", desc: "Every deal is built on integrity and transparency — earning the confidence of our clients.", icon: "🤝" },
                 { title: "Affordability", desc: "We provide cost-effective solutions without compromising location value or clarity of process.", icon: "💰" },
@@ -106,7 +104,6 @@ const About = () => {
                   <p>{value.desc}</p>
                 </article>
               ))}
-              {/* Duplicate for seamless loop */}
               {[
                 { title: "Trust", desc: "Every deal is built on integrity and transparency — earning the confidence of our clients.", icon: "🤝" },
                 { title: "Affordability", desc: "We provide cost-effective solutions without compromising location value or clarity of process.", icon: "💰" },
@@ -151,21 +148,23 @@ const About = () => {
           </div>
         </section>
 
-        {/* Testimonials */}
+        {/* Testimonials with AI Avatars */}
         <section style={{ marginTop: "20px" }}>
           <h2 className="section-title" style={{ textAlign: "left" }}>What Our Clients Say</h2>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "8px" }}>
             {[
-              { text: "Bought a 500sqm lot in Pinamalayan through SouthStar. The title was clean and transfer was done in just 3 weeks. Very smooth!", author: "Maria Dela Cruz", role: "Homeowner, Pinamalayan", avatar: "👩", stars: 5 },
-              { text: "As an OFW, it was hard to buy land remotely. SouthStar handled everything — documents, verification, even site photos. Highly recommend!", author: "Roberto Garcia", role: "OFW Investor, Gloria", avatar: "👨", stars: 5 },
-              { text: "I was skeptical at first but Sir Ram was very patient explaining every step. Got my farmland in Bansud at a great price. Legit sila!", author: "Jenny Santos", role: "Farmer, Bansud", avatar: "👩‍🌾", stars: 5 },
-              { text: "SouthStar helped me find a commercial lot near the highway in Calapan. Professional service from consultation to final paperwork.", author: "Mark Anthony Reyes", role: "Business Owner, Calapan", avatar: "👨‍💼", stars: 4 },
+              { text: "Bought a 500sqm lot in Pinamalayan through SouthStar. The title was clean and transfer was done in just 3 weeks. Very smooth!", author: "Maria Dela Cruz", role: "Homeowner, Pinamalayan", stars: 5 },
+              { text: "As an OFW, it was hard to buy land remotely. SouthStar handled everything — documents, verification, even site photos. Highly recommend!", author: "Roberto Garcia", role: "OFW Investor, Gloria", stars: 5 },
+              { text: "I was skeptical at first but Sir Ram was very patient explaining every step. Got my farmland in Bansud at a great price. Legit sila!", author: "Jenny Santos", role: "Farmer, Bansud", stars: 5 },
+              { text: "SouthStar helped me find a commercial lot near the highway in Calapan. Professional service from consultation to final paperwork.", author: "Mark Anthony Reyes", role: "Business Owner, Calapan", stars: 4 },
             ].map((testimonial, i) => (
               <article key={i} className="property-card" style={{ padding: 0 }}>
                 <div className="property-details" style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
-                  <div style={{ fontSize: "2.5rem", minWidth: "50px", height: "50px", borderRadius: "50%", background: "linear-gradient(135deg, #e8f5e9, #c8e6c9)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    {testimonial.avatar}
-                  </div>
+                  <img
+                    src={getAvatarUrl(testimonial.author, 80)}
+                    alt={testimonial.author}
+                    className="testimonial-avatar"
+                  />
                   <div style={{ flex: 1 }}>
                     <div style={{ color: "#f59e0b", fontSize: "0.9rem", marginBottom: "4px" }}>
                       {"★".repeat(testimonial.stars)}{"☆".repeat(5 - testimonial.stars)}

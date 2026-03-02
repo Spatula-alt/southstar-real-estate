@@ -1,32 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import AppointmentScheduler from "@/components/AppointmentScheduler";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      toast({
-        title: "Error",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
+      toast({ title: "Error", description: "Please fill in all required fields.", variant: "destructive" });
       return;
     }
-
-    toast({
-      title: "Message Sent!",
-      description: `Thank you for your inquiry, ${formData.name}! We will contact you at ${formData.email} within 1-2 business days.`,
-    });
-
+    toast({ title: "Message Sent!", description: `Thank you for your inquiry, ${formData.name}! We will contact you at ${formData.email} within 1-2 business days.` });
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
@@ -36,14 +22,10 @@ const Contact = () => {
 
   return (
     <>
-      {/* Header */}
       <header className="site-header">
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>SouthStar Realty</h1>
-        </Link>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
       </header>
 
-      {/* Navigation */}
       <nav className="tab-nav">
         <div className="nav-container">
           <Link to="/">PROPERTIES</Link>
@@ -57,89 +39,39 @@ const Contact = () => {
 
       <main className="wrap main-content">
         <div className="contact-layout">
-          {/* Contact Form */}
           <article className="contact-form-box">
             <h2>Contact Us</h2>
-
             <form onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="name">Name</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  placeholder="Your full name"
-                  value={formData.name}
-                  onChange={handleChange}
-                />
+                <input id="name" name="name" type="text" required placeholder="Your full name" value={formData.name} onChange={handleChange} />
               </div>
-
               <div>
                 <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="you@domain.com"
-                  value={formData.email}
-                  onChange={handleChange}
-                />
+                <input id="email" name="email" type="email" required placeholder="you@domain.com" value={formData.email} onChange={handleChange} />
               </div>
-
               <div>
                 <label htmlFor="phone">Phone (optional)</label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  placeholder="+63 912 345 6789"
-                  value={formData.phone}
-                  onChange={handleChange}
-                />
+                <input id="phone" name="phone" type="tel" placeholder="+63 912 345 6789" value={formData.phone} onChange={handleChange} />
               </div>
-
               <div>
                 <label htmlFor="message">Message</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={5}
-                  required
-                  placeholder="How can we help you?"
-                  value={formData.message}
-                  onChange={handleChange}
-                />
+                <textarea id="message" name="message" rows={5} required placeholder="How can we help you?" value={formData.message} onChange={handleChange} />
               </div>
-
               <button type="submit">Send Message</button>
-
-              <p className="form-disclaimer">
-                We reply within 1-2 business days. By sending this message you agree to be contacted regarding your inquiry.
-              </p>
+              <p className="form-disclaimer">We reply within 1-2 business days. By sending this message you agree to be contacted regarding your inquiry.</p>
             </form>
           </article>
 
-          {/* Office Info */}
           <article className="contact-info-box">
             <h3>Our Office</h3>
             <div className="office-details">
               <p><span className="icon">📍</span> Calapan City, Oriental Mindoro</p>
               <p><span className="icon">📞</span> +63 912 345 6789</p>
-              <p>
-                <span className="icon">📧</span>{" "}
-                <a href="mailto:info@southstarrealty.com">info@southstarrealty.com</a>
-              </p>
+              <p><span className="icon">📧</span> <a href="mailto:info@southstarrealty.com">info@southstarrealty.com</a></p>
             </div>
-
             <h4>Office Hours</h4>
-            <p className="hours-text">
-              Mon — Fri: 8:30 AM — 5:30 PM
-              <br />
-              Sat: 9:00 AM — 10:00 AM
-            </p>
-
+            <p className="hours-text">Mon — Fri: 8:30 AM — 5:30 PM<br />Sat: 9:00 AM — 10:00 AM</p>
             <h4>Quick Links</h4>
             <div className="quick-links">
               <Link to="/">View Properties</Link>
@@ -147,12 +79,13 @@ const Contact = () => {
             </div>
           </article>
         </div>
+
+        {/* Appointment Scheduler */}
+        <AppointmentScheduler />
       </main>
 
-      {/* Footer */}
       <footer className="ayala-footer">
         <div className="footer-wrap">
-          {/* Left: Social Icons + Copyright */}
           <div className="footer-left">
             <div className="social-icons">
               <a href="#" aria-label="LinkedIn" className="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
@@ -165,29 +98,10 @@ const Contact = () => {
               © {new Date().getFullYear()} SouthStar Realty. All Rights Reserved | <a href="#">Terms of Use</a> | <a href="#">Privacy Notice</a>
             </div>
           </div>
-
-          {/* Right: Navigation Columns */}
           <div className="footer-nav-columns">
-            <div className="footer-nav-col">
-              <a href="/">HOME</a>
-              <a href="#">ESTATES</a>
-              <a href="#">RESIDENTIAL BRANDS</a>
-              <a href="/">PROPERTIES</a>
-            </div>
-            <div className="footer-nav-col">
-              <a href="/about">ABOUT US</a>
-              <a href="#">SUSTAINABILITY</a>
-              <a href="#">CORPORATE GOVERNANCE</a>
-              <a href="#">INVESTOR RELATIONS</a>
-              <a href="#">NEWS ARTICLES</a>
-            </div>
-            <div className="footer-nav-col">
-              <a href="#">MALLS</a>
-              <a href="#">OFFICES</a>
-              <a href="#">HOSPITALITY</a>
-              <a href="#">AREIT</a>
-              <a href="#">SERVICES</a>
-            </div>
+            <div className="footer-nav-col"><a href="/">HOME</a><a href="#">ESTATES</a><a href="#">RESIDENTIAL BRANDS</a><a href="/">PROPERTIES</a></div>
+            <div className="footer-nav-col"><a href="/about">ABOUT US</a><a href="#">SUSTAINABILITY</a><a href="#">CORPORATE GOVERNANCE</a><a href="#">INVESTOR RELATIONS</a><a href="#">NEWS ARTICLES</a></div>
+            <div className="footer-nav-col"><a href="#">MALLS</a><a href="#">OFFICES</a><a href="#">HOSPITALITY</a><a href="#">AREIT</a><a href="#">SERVICES</a></div>
           </div>
         </div>
       </footer>
