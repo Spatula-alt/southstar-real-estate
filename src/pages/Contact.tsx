@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import AppointmentScheduler from "@/components/AppointmentScheduler";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       toast({ title: "Error", description: "Please fill in all required fields.", variant: "destructive" });
       return;
     }
-    toast({ title: "Message Sent!", description: `Thank you for your inquiry, ${formData.name}! We will contact you at ${formData.email} within 1-2 business days.` });
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_messages" as any).insert({
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || null,
+      message: formData.message.trim(),
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: "Could not send message. Please try again.", variant: "destructive" });
+      return;
+    }
+    toast({ title: "Message Sent!", description: `Thank you for your inquiry, ${formData.name}! We will contact you within 1-2 business days.` });
     setFormData({ name: "", email: "", phone: "", message: "" });
   };
 
@@ -58,8 +72,8 @@ const Contact = () => {
                 <label htmlFor="message">Message</label>
                 <textarea id="message" name="message" rows={5} required placeholder="How can we help you?" value={formData.message} onChange={handleChange} />
               </div>
-              <button type="submit">Send Message</button>
-              <p className="form-disclaimer">We reply within 1-2 business days. By sending this message you agree to be contacted regarding your inquiry.</p>
+              <button type="submit" disabled={submitting}>{submitting ? "Sending..." : "Send Message"}</button>
+              <p className="form-disclaimer">We reply within 1-2 business days.</p>
             </form>
           </article>
 
@@ -80,7 +94,6 @@ const Contact = () => {
           </article>
         </div>
 
-        {/* Appointment Scheduler */}
         <AppointmentScheduler />
       </main>
 

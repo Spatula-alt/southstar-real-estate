@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { places } from "@/data/properties";
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"];
 
@@ -15,13 +16,31 @@ const AppointmentScheduler = () => {
   const [agreed, setAgreed] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [confirmNum, setConfirmNum] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const today = new Date().toISOString().split("T")[0];
   const maxDate = new Date(Date.now() + 60 * 86400000).toISOString().split("T")[0];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!form.name || !form.email) {
       toast({ title: "Error", description: "Name and email are required.", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const selectedPlace = places.find(p => p.id === property);
+    const { error } = await supabase.from("appointments" as any).insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      phone: form.phone.trim() || null,
+      municipality: selectedPlace?.name || null,
+      property_id: property || null,
+      preferred_date: date,
+      preferred_time: time,
+      message: form.message.trim() || null,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: "Could not book appointment. Please try again.", variant: "destructive" });
       return;
     }
     const num = `OM-2026-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -59,7 +78,6 @@ const AppointmentScheduler = () => {
     <div className="scheduler-section">
       <h2 className="section-title" style={{ textAlign: "left" }}>📅 Schedule a Property Viewing</h2>
 
-      {/* Step indicators */}
       <div className="scheduler-steps">
         {[1, 2, 3, 4].map((s) => (
           <div key={s} className={`step-dot ${step >= s ? "active" : ""}`}>{s}</div>
@@ -106,13 +124,7 @@ const AppointmentScheduler = () => {
           <h4>Pick a Time Slot</h4>
           <div className="time-slots">
             {timeSlots.map((t) => (
-              <button
-                key={t}
-                className={`time-chip ${time === t ? "selected" : ""}`}
-                onClick={() => setTime(t)}
-              >
-                {t}
-              </button>
+              <button key={t} className={`time-chip ${time === t ? "selected" : ""}`} onClick={() => setTime(t)}>{t}</button>
             ))}
           </div>
           <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
@@ -137,7 +149,9 @@ const AppointmentScheduler = () => {
           </div>
           <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
             <button className="view-btn" onClick={() => setStep(3)}>← Back</button>
-            <button className="buy-btn" onClick={handleSubmit} disabled={!agreed || !form.name || !form.email}>Book Appointment</button>
+            <button className="buy-btn" onClick={handleSubmit} disabled={!agreed || !form.name || !form.email || submitting}>
+              {submitting ? "Booking..." : "Book Appointment"}
+            </button>
           </div>
         </div>
       )}

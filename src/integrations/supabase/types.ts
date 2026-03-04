@@ -14,7 +14,120 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      appointments: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string | null
+          municipality: string | null
+          name: string
+          phone: string | null
+          preferred_date: string
+          preferred_time: string
+          property_id: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message?: string | null
+          municipality?: string | null
+          name: string
+          phone?: string | null
+          preferred_date: string
+          preferred_time: string
+          property_id?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string | null
+          municipality?: string | null
+          name?: string
+          phone?: string | null
+          preferred_date?: string
+          preferred_time?: string
+          property_id?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          phone: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          phone?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          phone?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          feedback: string
+          id: string
+          name: string
+          rating_affordability: number
+          rating_hospitality: number
+          rating_overall: number
+          rating_service: number
+          rating_trust: number
+          status: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          feedback: string
+          id?: string
+          name: string
+          rating_affordability?: number
+          rating_hospitality?: number
+          rating_overall?: number
+          rating_service?: number
+          rating_trust?: number
+          status?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          feedback?: string
+          id?: string
+          name?: string
+          rating_affordability?: number
+          rating_hospitality?: number
+          rating_overall?: number
+          rating_service?: number
+          rating_trust?: number
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
