@@ -5,6 +5,8 @@ import { toast } from "@/hooks/use-toast";
 import AyalaFooter from "@/components/AyalaFooter";
 import PropertyOverview from "@/components/PropertyOverview";
 import SharePanel from "@/components/SharePanel";
+import BuyAbilityWidget from "@/components/BuyAbilityWidget";
+import { supabase } from "@/integrations/supabase/client";
 
 const propertyData: Record<string, { title: string; map: string; img: string }> = {
   puertogalera: { title: "Puerto Galera", map: "https://www.google.com/maps?q=Puerto+Galera+Oriental+Mindoro&z=12&output=embed", img: "https://www.travelorientalmindoro.ph/Content/img/uploads/3997051e-5e30-4aff-9f65-cc33f90d3b6b_thumb.jpg" },
@@ -38,11 +40,24 @@ const Property = () => {
   const recommendations = getRecommendations(placeId);
 
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       toast({ title: "Error", description: "Please fill in all required fields.", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_messages" as any).insert({
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim() || null,
+      message: formData.message.trim(),
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: "Could not send inquiry. Please try again.", variant: "destructive" });
       return;
     }
     toast({ title: "Inquiry Sent!", description: `Thanks ${formData.name}! Your inquiry for ${property.title} has been recorded.` });
@@ -56,7 +71,7 @@ const Property = () => {
   return (
     <>
       <header className="site-header" style={{ position: "relative" }}>
-        <button id="backBtn" onClick={() => navigate(-1)} style={{ position: "absolute", top: "16px", left: "16px", background: "#FFD700", border: "none", borderRadius: "6px", padding: "8px 12px", cursor: "pointer", fontWeight: 700, zIndex: 20 }}>← Back</button>
+        <button id="backBtn" onClick={() => navigate(-1)} style={{ position: "absolute", top: "16px", left: "16px", background: "var(--accent)", border: "none", borderRadius: "6px", padding: "8px 12px", cursor: "pointer", fontWeight: 700, zIndex: 20 }}>← Back</button>
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
       </header>
 
@@ -99,29 +114,36 @@ const Property = () => {
 
             {/* Property Overview Table */}
             <PropertyOverview title={property.title} type={placeInfo?.type || "Lot"} price={placeInfo?.price || ""} placeId={placeId} />
+
+            {/* BuyAbility Widget - BELOW overview */}
+            <BuyAbilityWidget />
           </div>
 
-          {/* Right Sidebar */}
-          <div>
-            <aside className="inquiry-box-fixed">
-              <h3>Inquire Now</h3>
-              <div className="agent-card">
-                <div className="agent-avatar">R</div>
-                <div>
-                  <div className="agent-name">Jarabe Ram Felix ✔</div>
-                  <div className="agent-info">Listed by SouthStar Realty</div>
+          {/* Right Sidebar - sticky container with proper spacing */}
+          <div className="property-sidebar">
+            <div className="sidebar-sticky">
+              <aside className="inquiry-box-fixed">
+                <h3>Inquire Now</h3>
+                <div className="agent-card">
+                  <div className="agent-avatar">R</div>
+                  <div>
+                    <div className="agent-name">Jarabe Ram Felix ✔</div>
+                    <div className="agent-info">Listed by SouthStar Realty</div>
+                  </div>
                 </div>
-              </div>
-              <form onSubmit={handleSubmit}>
-                <div className="form-group"><label>Name *</label><input name="name" type="text" required value={formData.name} onChange={handleChange} /></div>
-                <div className="form-group"><label>Email *</label><input name="email" type="email" required value={formData.email} onChange={handleChange} /></div>
-                <div className="form-group"><label>Phone</label><input name="phone" type="tel" value={formData.phone} onChange={handleChange} /></div>
-                <div className="form-group"><label>Message *</label><textarea name="message" rows={4} required value={formData.message} onChange={handleChange} /></div>
-                <button type="submit" className="contact-agent-btn">Contact agent</button>
-              </form>
-            </aside>
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group"><label>Name *</label><input name="name" type="text" required value={formData.name} onChange={handleChange} /></div>
+                  <div className="form-group"><label>Email *</label><input name="email" type="email" required value={formData.email} onChange={handleChange} /></div>
+                  <div className="form-group"><label>Phone</label><input name="phone" type="tel" value={formData.phone} onChange={handleChange} /></div>
+                  <div className="form-group"><label>Message *</label><textarea name="message" rows={4} required value={formData.message} onChange={handleChange} /></div>
+                  <button type="submit" className="contact-agent-btn" disabled={submitting}>
+                    {submitting ? "Sending..." : "Contact agent"}
+                  </button>
+                </form>
+              </aside>
+            </div>
 
-            {/* Share & Actions Panel */}
+            {/* Share & Actions Panel - OUTSIDE sticky so it's never covered */}
             <SharePanel title={`${property.title} - SouthStar Realty`} />
           </div>
         </div>

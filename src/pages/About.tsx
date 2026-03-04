@@ -1,14 +1,123 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
 import { getAvatarUrl } from "@/utils/avatarSeed";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "@/hooks/use-toast";
+
+const StarRating = ({ value, onChange, size = 20 }: { value: number; onChange?: (v: number) => void; size?: number }) => (
+  <div style={{ display: "flex", gap: 2 }}>
+    {[1, 2, 3, 4, 5].map((s) => (
+      <span
+        key={s}
+        onClick={() => onChange?.(s)}
+        style={{ cursor: onChange ? "pointer" : "default", fontSize: size, color: s <= value ? "#f59e0b" : "#ddd" }}
+      >
+        ★
+      </span>
+    ))}
+  </div>
+);
+
+const CategoryBar = ({ label, value }: { label: string; value: number }) => (
+  <div className="review-category-bar">
+    <span className="category-label">{label}</span>
+    <div className="category-track">
+      <div className="category-fill" style={{ width: `${(value / 5) * 100}%` }} />
+    </div>
+    <span className="category-value">{value.toFixed(1)}</span>
+  </div>
+);
+
+interface Review {
+  id: string;
+  name: string;
+  rating_overall: number;
+  rating_service: number;
+  rating_hospitality: number;
+  rating_affordability: number;
+  rating_trust: number;
+  feedback: string;
+  avatar_url: string | null;
+}
 
 const About = () => {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    feedback: "",
+    rating_overall: 5,
+    rating_service: 5,
+    rating_hospitality: 5,
+    rating_affordability: 5,
+    rating_trust: 5,
+  });
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      const { data } = await supabase
+        .from("reviews" as any)
+        .select("id, name, rating_overall, rating_service, rating_hospitality, rating_affordability, rating_trust, feedback, avatar_url")
+        .eq("status", "approved")
+        .order("created_at", { ascending: false })
+        .limit(8);
+      if (data && (data as any[]).length > 0) {
+        setReviews(data as any as Review[]);
+      }
+    };
+    fetchReviews();
+  }, []);
+
+  const handleReviewSubmit = async () => {
+    if (!form.name.trim() || !form.feedback.trim()) {
+      toast({ title: "Error", description: "Name and feedback are required.", variant: "destructive" });
+      return;
+    }
+    setSubmitting(true);
+    const { error } = await supabase.from("reviews" as any).insert({
+      name: form.name.trim(),
+      feedback: form.feedback.trim(),
+      rating_overall: form.rating_overall,
+      rating_service: form.rating_service,
+      rating_hospitality: form.rating_hospitality,
+      rating_affordability: form.rating_affordability,
+      rating_trust: form.rating_trust,
+      avatar_url: getAvatarUrl(form.name, 80),
+      status: "pending",
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: "Could not submit review.", variant: "destructive" });
+      return;
+    }
+    toast({ title: "Review Submitted!", description: "Your review will be visible after admin approval." });
+    setForm({ name: "", feedback: "", rating_overall: 5, rating_service: 5, rating_hospitality: 5, rating_affordability: 5, rating_trust: 5 });
+    setShowForm(false);
+  };
+
+  // Default testimonials if no approved reviews in DB yet
+  const displayReviews = reviews.length > 0 ? reviews : [
+    { id: "1", name: "Maria Dela Cruz", rating_overall: 5, rating_service: 5, rating_hospitality: 5, rating_affordability: 4, rating_trust: 5, feedback: "Bought a 500sqm lot in Pinamalayan through SouthStar. The title was clean and transfer was done in just 3 weeks. Very smooth!", avatar_url: null },
+    { id: "2", name: "Roberto Garcia", rating_overall: 5, rating_service: 5, rating_hospitality: 4, rating_affordability: 5, rating_trust: 5, feedback: "As an OFW, it was hard to buy land remotely. SouthStar handled everything — documents, verification, even site photos. Highly recommend!", avatar_url: null },
+    { id: "3", name: "Jenny Santos", rating_overall: 5, rating_service: 4, rating_hospitality: 5, rating_affordability: 5, rating_trust: 5, feedback: "I was skeptical at first but Sir Ram was very patient explaining every step. Got my farmland in Bansud at a great price. Legit sila!", avatar_url: null },
+    { id: "4", name: "Mark Anthony Reyes", rating_overall: 4, rating_service: 4, rating_hospitality: 4, rating_affordability: 4, rating_trust: 5, feedback: "SouthStar helped me find a commercial lot near the highway in Calapan. Professional service from consultation to final paperwork.", avatar_url: null },
+  ];
+
+  // Calculate average category ratings
+  const avgRatings = {
+    service: displayReviews.reduce((s, r) => s + r.rating_service, 0) / displayReviews.length,
+    hospitality: displayReviews.reduce((s, r) => s + r.rating_hospitality, 0) / displayReviews.length,
+    affordability: displayReviews.reduce((s, r) => s + r.rating_affordability, 0) / displayReviews.length,
+    trust: displayReviews.reduce((s, r) => s + r.rating_trust, 0) / displayReviews.length,
+  };
+  const overallAvg = displayReviews.reduce((s, r) => s + r.rating_overall, 0) / displayReviews.length;
+
   return (
     <>
       <header className="site-header">
-        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-          <h1>SouthStar Realty</h1>
-        </Link>
+        <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
       </header>
 
       <nav className="tab-nav">
@@ -25,13 +134,8 @@ const About = () => {
       {/* Hero */}
       <section
         style={{
-          padding: "72px 14px",
-          textAlign: "center",
-          color: "#fff",
-          position: "relative",
-          overflow: "hidden",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
+          padding: "72px 14px", textAlign: "center", color: "#fff", position: "relative", overflow: "hidden",
+          backgroundSize: "cover", backgroundPosition: "center",
           backgroundImage: "url(https://travelorientalmindoro.ph/Content/img/uploads/default.jpg)"
         }}
       >
@@ -72,31 +176,27 @@ const About = () => {
             <article className="property-card">
               <div className="property-details">
                 <h3>Our Mission</h3>
-                <p style={{ color: "#666" }}>
-                  To connect people with their dream properties by making land ownership <strong>accessible, affordable, and secure</strong>. We guide clients with honesty and professionalism.
-                </p>
+                <p style={{ color: "#666" }}>To connect people with their dream properties by making land ownership <strong>accessible, affordable, and secure</strong>.</p>
               </div>
             </article>
             <article className="property-card">
               <div className="property-details">
                 <h3>Our Vision</h3>
-                <p style={{ color: "#666" }}>
-                  To become the <strong>most reliable and community-driven real estate company in Oriental Mindoro</strong>, uplifting lives while ensuring long-term value in every investment.
-                </p>
+                <p style={{ color: "#666" }}>To become the <strong>most reliable and community-driven real estate company in Oriental Mindoro</strong>.</p>
               </div>
             </article>
           </div>
         </section>
 
-        {/* Core Values - Animated */}
+        {/* Core Values */}
         <section style={{ marginTop: "20px" }}>
           <h2 className="section-title" style={{ textAlign: "left" }}>Our Core Values</h2>
           <div className="core-values-carousel">
             <div className="core-values-track">
               {[
-                { title: "Trust", desc: "Every deal is built on integrity and transparency — earning the confidence of our clients.", icon: "🤝" },
-                { title: "Affordability", desc: "We provide cost-effective solutions without compromising location value or clarity of process.", icon: "💰" },
-                { title: "Local Expertise", desc: "Our deep knowledge of Oriental Mindoro ensures we match people to the best opportunities.", icon: "🏠" },
+                { title: "Trust", desc: "Every deal is built on integrity and transparency.", icon: "🤝" },
+                { title: "Affordability", desc: "Cost-effective solutions without compromising value.", icon: "💰" },
+                { title: "Local Expertise", desc: "Deep knowledge of Oriental Mindoro opportunities.", icon: "🏠" },
               ].map((value, idx) => (
                 <article key={`first-${idx}`} className="core-value-card">
                   <span className="value-icon">{value.icon}</span>
@@ -105,9 +205,9 @@ const About = () => {
                 </article>
               ))}
               {[
-                { title: "Trust", desc: "Every deal is built on integrity and transparency — earning the confidence of our clients.", icon: "🤝" },
-                { title: "Affordability", desc: "We provide cost-effective solutions without compromising location value or clarity of process.", icon: "💰" },
-                { title: "Local Expertise", desc: "Our deep knowledge of Oriental Mindoro ensures we match people to the best opportunities.", icon: "🏠" },
+                { title: "Trust", desc: "Every deal is built on integrity and transparency.", icon: "🤝" },
+                { title: "Affordability", desc: "Cost-effective solutions without compromising value.", icon: "💰" },
+                { title: "Local Expertise", desc: "Deep knowledge of Oriental Mindoro opportunities.", icon: "🏠" },
               ].map((value, idx) => (
                 <article key={`second-${idx}`} className="core-value-card">
                   <span className="value-icon">{value.icon}</span>
@@ -133,9 +233,7 @@ const About = () => {
         {/* Office & Map */}
         <section style={{ marginTop: "20px" }}>
           <h2 className="section-title" style={{ textAlign: "left" }}>Visit Our Office</h2>
-          <p style={{ color: "#666", marginTop: "6px" }}>
-            📍 In front of Gloria Central School, near Andok's, Poblacion Maligaya, Gloria, Oriental Mindoro.
-          </p>
+          <p style={{ color: "#666", marginTop: "6px" }}>📍 In front of Gloria Central School, near Andok's, Poblacion Maligaya, Gloria, Oriental Mindoro.</p>
           <div className="map-section" style={{ marginTop: "12px", marginBottom: 0 }}>
             <div className="map-box">
               <iframe
@@ -148,35 +246,92 @@ const About = () => {
           </div>
         </section>
 
-        {/* Testimonials with AI Avatars */}
-        <section style={{ marginTop: "20px" }}>
+        {/* REDESIGNED REVIEW SECTION */}
+        <section style={{ marginTop: "30px" }}>
           <h2 className="section-title" style={{ textAlign: "left" }}>What Our Clients Say</h2>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "8px" }}>
-            {[
-              { text: "Bought a 500sqm lot in Pinamalayan through SouthStar. The title was clean and transfer was done in just 3 weeks. Very smooth!", author: "Maria Dela Cruz", role: "Homeowner, Pinamalayan", stars: 5 },
-              { text: "As an OFW, it was hard to buy land remotely. SouthStar handled everything — documents, verification, even site photos. Highly recommend!", author: "Roberto Garcia", role: "OFW Investor, Gloria", stars: 5 },
-              { text: "I was skeptical at first but Sir Ram was very patient explaining every step. Got my farmland in Bansud at a great price. Legit sila!", author: "Jenny Santos", role: "Farmer, Bansud", stars: 5 },
-              { text: "SouthStar helped me find a commercial lot near the highway in Calapan. Professional service from consultation to final paperwork.", author: "Mark Anthony Reyes", role: "Business Owner, Calapan", stars: 4 },
-            ].map((testimonial, i) => (
-              <article key={i} className="property-card" style={{ padding: 0 }}>
-                <div className="property-details" style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
+
+          {/* Rating Summary - Play Store Style */}
+          <div className="review-summary">
+            <div className="review-summary-left">
+              <span className="review-big-number">{overallAvg.toFixed(1)}</span>
+              <StarRating value={Math.round(overallAvg)} size={18} />
+              <span className="review-count">{displayReviews.length} reviews</span>
+            </div>
+            <div className="review-summary-right">
+              <CategoryBar label="Service" value={avgRatings.service} />
+              <CategoryBar label="Hospitality" value={avgRatings.hospitality} />
+              <CategoryBar label="Affordability" value={avgRatings.affordability} />
+              <CategoryBar label="Trust" value={avgRatings.trust} />
+            </div>
+          </div>
+
+          {/* Review Cards - Compact horizontal */}
+          <div className="review-cards-grid">
+            {displayReviews.map((r) => (
+              <article key={r.id} className="review-card">
+                <div className="review-card-header">
                   <img
-                    src={getAvatarUrl(testimonial.author, 80)}
-                    alt={testimonial.author}
-                    className="testimonial-avatar"
+                    src={r.avatar_url || getAvatarUrl(r.name, 48)}
+                    alt={r.name}
+                    className="review-avatar"
                   />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ color: "#f59e0b", fontSize: "0.9rem", marginBottom: "4px" }}>
-                      {"★".repeat(testimonial.stars)}{"☆".repeat(5 - testimonial.stars)}
-                    </div>
-                    <p style={{ color: "#555", fontStyle: "italic", fontSize: "0.92rem", lineHeight: 1.5 }}>"{testimonial.text}"</p>
-                    <p style={{ color: "var(--primary-dark)", fontWeight: 700, marginTop: "8px", fontSize: "0.95rem" }}>{testimonial.author}</p>
-                    <p style={{ color: "#888", fontSize: "0.8rem" }}>{testimonial.role}</p>
+                  <div>
+                    <div className="review-author">{r.name}</div>
+                    <StarRating value={r.rating_overall} size={14} />
                   </div>
                 </div>
+                <p className="review-text">"{r.feedback}"</p>
               </article>
             ))}
           </div>
+
+          {/* Submit Review Button */}
+          <div style={{ textAlign: "center", marginTop: 20 }}>
+            <button className="buy-btn" onClick={() => setShowForm(!showForm)}>
+              {showForm ? "Cancel" : "Write a Review"}
+            </button>
+          </div>
+
+          {/* Review Submission Form */}
+          {showForm && (
+            <div className="review-form-box">
+              <h4>Submit Your Review</h4>
+              <div className="review-form-field">
+                <label>Your Name *</label>
+                <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Full name" />
+              </div>
+              <div className="review-form-field">
+                <label>Overall Rating</label>
+                <StarRating value={form.rating_overall} onChange={(v) => setForm({ ...form, rating_overall: v })} size={24} />
+              </div>
+              <div className="review-form-ratings">
+                <div>
+                  <label>Service</label>
+                  <StarRating value={form.rating_service} onChange={(v) => setForm({ ...form, rating_service: v })} size={18} />
+                </div>
+                <div>
+                  <label>Hospitality</label>
+                  <StarRating value={form.rating_hospitality} onChange={(v) => setForm({ ...form, rating_hospitality: v })} size={18} />
+                </div>
+                <div>
+                  <label>Affordability</label>
+                  <StarRating value={form.rating_affordability} onChange={(v) => setForm({ ...form, rating_affordability: v })} size={18} />
+                </div>
+                <div>
+                  <label>Trust</label>
+                  <StarRating value={form.rating_trust} onChange={(v) => setForm({ ...form, rating_trust: v })} size={18} />
+                </div>
+              </div>
+              <div className="review-form-field">
+                <label>Your Feedback *</label>
+                <textarea value={form.feedback} onChange={(e) => setForm({ ...form, feedback: e.target.value })} rows={4} placeholder="Share your experience..." />
+              </div>
+              <button className="buy-btn" onClick={handleReviewSubmit} disabled={submitting} style={{ width: "100%" }}>
+                {submitting ? "Submitting..." : "Submit Review"}
+              </button>
+              <p style={{ color: "#888", fontSize: "0.8rem", marginTop: 8 }}>Reviews are published after admin approval.</p>
+            </div>
+          )}
         </section>
 
         {/* CTA */}
@@ -184,11 +339,9 @@ const About = () => {
           <div className="property-details" style={{ textAlign: "center" }}>
             <h3>Join Our Mission</h3>
             <p style={{ color: "#666", maxWidth: "820px", margin: "0 auto 12px" }}>
-              Looking for a trusted real estate partner or career opportunity? Be part of our journey in building Oriental Mindoro's future.
+              Looking for a trusted real estate partner? Be part of our journey in building Oriental Mindoro's future.
             </p>
-            <Link to="/contact" className="buy-btn">
-              Get in Touch
-            </Link>
+            <Link to="/contact" className="buy-btn">Get in Touch</Link>
           </div>
         </section>
       </main>
