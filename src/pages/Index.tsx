@@ -70,8 +70,6 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="wrap index-content">
-        {/* BuyAbility Widget */}
-        <BuyAbilityWidget />
 
         <div className="index-overview">
           {/* Property Listings - Left Column */}
