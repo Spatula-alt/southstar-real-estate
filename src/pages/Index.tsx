@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { places } from "@/data/properties";
 import AyalaFooter from "@/components/AyalaFooter";
-import BuyAbilityWidget from "@/components/BuyAbilityWidget";
 import MunicipalityMap from "@/components/MunicipalityMap";
 import MobileDrawer from "@/components/MobileDrawer";
 
@@ -71,8 +70,6 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="wrap index-content">
-        {/* BuyAbility Widget */}
-        <BuyAbilityWidget />
 
         <div className="index-overview">
           {/* Property Listings - Left Column */}
