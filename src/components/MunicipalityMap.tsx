@@ -78,8 +78,6 @@ const MunicipalityMap = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   const geojsonData = useMemo(() => buildGeoJSON(municipalityBoundaries), []);
-  const floodGeoJSON = useMemo(() => buildGeoJSON(municipalityBoundaries), []);
-  const wildfireGeoJSON = useMemo(() => buildGeoJSON(municipalityBoundaries), []);
 
   const handleClick = useCallback(
     (feature: GeoJSON.Feature, layer: L.Layer) => {
@@ -188,7 +186,7 @@ const MunicipalityMap = () => {
         {layers.flood && (
           <GeoJSON
             key="flood"
-            data={floodGeoJSON}
+            data={geojsonData}
             style={floodStyle}
             onEachFeature={onEachOverlay}
           />
@@ -198,7 +196,7 @@ const MunicipalityMap = () => {
         {layers.wildfire && (
           <GeoJSON
             key="wildfire"
-            data={wildfireGeoJSON}
+            data={geojsonData}
             style={wildfireStyle}
             onEachFeature={onEachOverlay}
           />

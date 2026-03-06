@@ -4,8 +4,11 @@ interface Props {
   title: string;
 }
 
+const REPORT_REASONS = ["Inaccurate information", "Spam or scam", "Already sold", "Other"] as const;
+
 const SharePanel = ({ title }: Props) => {
   const [showReport, setShowReport] = useState(false);
+  const [selectedReasons, setSelectedReasons] = useState<Set<string>>(new Set());
   const url = typeof window !== "undefined" ? window.location.href : "";
   const encoded = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -32,13 +35,23 @@ const SharePanel = ({ title }: Props) => {
           <div className="buyability-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 400 }}>
             <button className="buyability-close" onClick={() => setShowReport(false)}>✕</button>
             <h3>Report Listing</h3>
-            <form onSubmit={(e) => { e.preventDefault(); setShowReport(false); }}>
-              {["Inaccurate information", "Spam or scam", "Already sold", "Other"].map((r) => (
+            <form onSubmit={(e) => { e.preventDefault(); setShowReport(false); setSelectedReasons(new Set()); }}>
+              {REPORT_REASONS.map((r) => (
                 <label key={r} style={{ display: "flex", gap: 8, margin: "8px 0", cursor: "pointer" }}>
-                  <input type="checkbox" /> {r}
+                  <input
+                    type="checkbox"
+                    checked={selectedReasons.has(r)}
+                    onChange={(e) => {
+                      setSelectedReasons((prev) => {
+                        const next = new Set(prev);
+                        e.target.checked ? next.add(r) : next.delete(r);
+                        return next;
+                      });
+                    }}
+                  /> {r}
                 </label>
               ))}
-              <button type="submit" className="buyability-submit" style={{ marginTop: 12 }}>Submit Report</button>
+              <button type="submit" className="buyability-submit" style={{ marginTop: 12 }} disabled={selectedReasons.size === 0}>Submit Report</button>
             </form>
           </div>
         </div>

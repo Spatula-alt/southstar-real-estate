@@ -47,7 +47,7 @@ const Index = () => {
               <input
                 type="text"
                 className="search-input"
-                placeholder="Search municipality (e.g. Gloria"
+                placeholder="Search municipality (e.g. Gloria)"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && setSearchQuery(searchQuery)}

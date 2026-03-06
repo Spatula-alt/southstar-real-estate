@@ -87,7 +87,7 @@ const BuyAbilityWidget = () => {
               <label>Annual Income</label>
               <div className="buyability-input-wrap">
                 <span>₱</span>
-                <input type="number" placeholder="0" value={form.annualIncome} onChange={(e) => setForm({ ...form, annualIncome: e.target.value })} />
+                <input type="number" placeholder="0" min="0" value={form.annualIncome} onChange={(e) => setForm({ ...form, annualIncome: e.target.value })} />
                 <span>/year</span>
               </div>
               <small>Pre-tax income</small>
@@ -98,7 +98,7 @@ const BuyAbilityWidget = () => {
                 <label>Down Payment</label>
                 <div className="buyability-input-wrap">
                   <span>₱</span>
-                  <input type="number" placeholder="0" value={form.downPayment} onChange={(e) => setForm({ ...form, downPayment: e.target.value })} />
+                  <input type="number" placeholder="0" min="0" value={form.downPayment} onChange={(e) => setForm({ ...form, downPayment: e.target.value })} />
                 </div>
                 <small>At least ₱50,000</small>
               </div>
@@ -106,7 +106,7 @@ const BuyAbilityWidget = () => {
                 <label>Monthly Debt</label>
                 <div className="buyability-input-wrap">
                   <span>₱</span>
-                  <input type="number" placeholder="0" value={form.monthlyDebt} onChange={(e) => setForm({ ...form, monthlyDebt: e.target.value })} />
+                  <input type="number" placeholder="0" min="0" value={form.monthlyDebt} onChange={(e) => setForm({ ...form, monthlyDebt: e.target.value })} />
                   <span>/month</span>
                 </div>
                 <small>Loans, credit cards, amortization</small>

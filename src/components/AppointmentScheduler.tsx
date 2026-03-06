@@ -62,7 +62,7 @@ const AppointmentScheduler = () => {
         </div>
         <p style={{ color: "#666", marginTop: 16, fontSize: "0.9rem" }}>We'll confirm your appointment within 24 hours.</p>
         <a
-          href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Property+Viewing+-+SouthStar+Realty&dates=${date.replace(/-/g, "")}/${date.replace(/-/g, "")}&details=Confirmation+${confirmNum}`}
+          href={`https://calendar.google.com/calendar/render?action=TEMPLATE&text=Property+Viewing+-+SouthStar+Realty&dates=${date.replace(/-/g, "")}T${time.includes("AM") ? String(parseInt(time)).padStart(2, "0") : String(parseInt(time) + 12).padStart(2, "0")}0000/${date.replace(/-/g, "")}T${time.includes("AM") ? String(parseInt(time) + 1).padStart(2, "0") : String(parseInt(time) + 13).padStart(2, "0")}0000&details=Confirmation+${confirmNum}`}
           target="_blank"
           rel="noopener noreferrer"
           className="buy-btn"

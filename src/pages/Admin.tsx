@@ -83,7 +83,7 @@ const Admin = () => {
         <div className="nav-container">
           <Link to="/">PROPERTIES</Link>
           <Link to="/admin" className="active">ADMIN</Link>
-          <Link to="/login">LOG OUT</Link>
+          <a href="#" onClick={async (e) => { e.preventDefault(); await supabase.auth.signOut(); navigate("/login"); }}>LOG OUT</a>
         </div>
       </nav>
 
