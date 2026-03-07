@@ -14,7 +14,7 @@ export const municipalityMeta: MunicipalityMeta[] = [
   { id: "puertogalera", name: "Puerto Galera", geoName: "PUERTO GALERA", lotCount: 8, floodRisk: "low", wildfireRisk: "low" },
   { id: "santeodoro", name: "San Teodoro", geoName: "SAN TEODORO", lotCount: 3, floodRisk: "medium", wildfireRisk: "low" },
   { id: "baco", name: "Baco", geoName: "BACO", lotCount: 4, floodRisk: "medium", wildfireRisk: "medium" },
-  { id: "calapan", name: "Calapan City", geoName: "CALAPAN CITY", lotCount: 15, floodRisk: "medium", wildfireRisk: "low" },
+  { id: "calapan", name: "Calapan City", geoName: "CITY OF CALAPAN", lotCount: 15, floodRisk: "medium", wildfireRisk: "low" },
   { id: "naujan", name: "Naujan", geoName: "NAUJAN", lotCount: 6, floodRisk: "high", wildfireRisk: "low" },
   { id: "victoria", name: "Victoria", geoName: "VICTORIA", lotCount: 5, floodRisk: "medium", wildfireRisk: "medium" },
   { id: "socorro", name: "Socorro", geoName: "SOCORRO", lotCount: 4, floodRisk: "medium", wildfireRisk: "medium" },
