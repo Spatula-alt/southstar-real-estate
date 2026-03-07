@@ -578,9 +578,7 @@ form button:hover { opacity: 0.9; }
   gap: 0;
 }
 .sidebar-sticky {
-  position: sticky;
-  top: 20px;
-  z-index: 10;
+  position: static;
   margin-bottom: 16px;
 }
 .inquiry-box-fixed {
