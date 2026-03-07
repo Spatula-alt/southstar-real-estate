@@ -1,25 +1,20 @@
-import { useState, useCallback, useMemo, useRef } from "react";
-import { MapContainer, TileLayer, GeoJSON, Tooltip, useMap } from "react-leaflet";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import { places } from "@/data/properties";
 import {
-  municipalityBoundaries,
+  municipalityMeta,
   getDensityColor,
   getFloodColor,
   getWildfireColor,
 } from "@/data/municipalityBoundaries";
 import "leaflet/dist/leaflet.css";
 
-// Build GeoJSON FeatureCollection from boundary data
-const buildGeoJSON = (data: typeof municipalityBoundaries): GeoJSON.FeatureCollection => ({
-  type: "FeatureCollection",
-  features: data.map((m) => ({
-    type: "Feature",
-    properties: { id: m.id, name: m.name, lotCount: m.lotCount, floodRisk: m.floodRisk, wildfireRisk: m.wildfireRisk },
-    geometry: { type: "Polygon", coordinates: m.coordinates },
-  })),
-});
+// Build a name→meta lookup
+const metaByGeoName = new Map(
+  municipalityMeta.map((m) => [m.geoName, m])
+);
 
 /* ---- Zoom-then-navigate helper ---- */
 const ZoomNavigator = ({ target, onDone }: { target: { bounds: L.LatLngBounds; id: string } | null; onDone: () => void }) => {
@@ -71,15 +66,44 @@ const LayerToggles = ({
   );
 };
 
+// Enrich GeoJSON features with our metadata
+function enrichGeoJSON(raw: GeoJSON.FeatureCollection): GeoJSON.FeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: raw.features
+      .map((f) => {
+        const geoName = f.properties?.MUNICIPALI as string;
+        const meta = metaByGeoName.get(geoName);
+        if (!meta) return null; // skip municipalities not in our list (e.g. Naujan Lake)
+        return {
+          ...f,
+          properties: {
+            ...f.properties,
+            id: meta.id,
+            name: meta.name,
+            lotCount: meta.lotCount,
+            floodRisk: meta.floodRisk,
+            wildfireRisk: meta.wildfireRisk,
+          },
+        };
+      })
+      .filter(Boolean) as GeoJSON.Feature[],
+  };
+}
+
 const MunicipalityMap = () => {
   const navigate = useNavigate();
   const [layers, setLayers] = useState({ heatmap: false, flood: false, wildfire: false });
   const [zoomTarget, setZoomTarget] = useState<{ bounds: L.LatLngBounds; id: string } | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [geojsonData, setGeojsonData] = useState<GeoJSON.FeatureCollection | null>(null);
 
-  const geojsonData = useMemo(() => buildGeoJSON(municipalityBoundaries), []);
-  const floodGeoJSON = useMemo(() => buildGeoJSON(municipalityBoundaries), []);
-  const wildfireGeoJSON = useMemo(() => buildGeoJSON(municipalityBoundaries), []);
+  useEffect(() => {
+    fetch("/oriental-mindoro.geojson")
+      .then((r) => r.json())
+      .then((raw) => setGeojsonData(enrichGeoJSON(raw)))
+      .catch(console.error);
+  }, []);
 
   const handleClick = useCallback(
     (feature: GeoJSON.Feature, layer: L.Layer) => {
@@ -99,7 +123,6 @@ const MunicipalityMap = () => {
     }
   }, [zoomTarget, navigate]);
 
-  // Main municipality boundary style
   const mainStyle = useCallback(
     (feature?: GeoJSON.Feature) => {
       if (!feature) return {};
@@ -158,9 +181,12 @@ const MunicipalityMap = () => {
   );
 
   const onEachOverlay = useCallback((_: GeoJSON.Feature, layer: L.Layer) => {
-    // Non-interactive overlays
     (layer as any).options.interactive = false;
   }, []);
+
+  if (!geojsonData) {
+    return <div style={{ height: 650, display: "flex", alignItems: "center", justifyContent: "center" }}>Loading map…</div>;
+  }
 
   return (
     <div style={{ position: "relative" }}>
@@ -176,7 +202,6 @@ const MunicipalityMap = () => {
           attribution="Tiles &copy; Esri"
         />
 
-        {/* Main municipality boundaries */}
         <GeoJSON
           key={`main-${hoveredId}`}
           data={geojsonData}
@@ -184,27 +209,24 @@ const MunicipalityMap = () => {
           onEachFeature={onEachFeature}
         />
 
-        {/* Flood risk overlay */}
         {layers.flood && (
           <GeoJSON
             key="flood"
-            data={floodGeoJSON}
+            data={geojsonData}
             style={floodStyle}
             onEachFeature={onEachOverlay}
           />
         )}
 
-        {/* Wildfire risk overlay */}
         {layers.wildfire && (
           <GeoJSON
             key="wildfire"
-            data={wildfireGeoJSON}
+            data={geojsonData}
             style={wildfireStyle}
             onEachFeature={onEachOverlay}
           />
         )}
 
-        {/* Heatmap-style density overlay (brighter fill for denser areas) */}
         {layers.heatmap && (
           <GeoJSON
             key="heatmap"
@@ -227,7 +249,6 @@ const MunicipalityMap = () => {
         <ZoomNavigator target={zoomTarget} onDone={handleNavigate} />
       </MapContainer>
 
-      {/* Legend */}
       <div className="map-legend">
         <span><span className="legend-dot" style={{ background: "#149f42" }} /> 10+ lots</span>
         <span><span className="legend-dot" style={{ background: "#4db86a" }} /> 6-9 lots</span>
