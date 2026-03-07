@@ -66,29 +66,44 @@ const LayerToggles = ({
   );
 };
 
-// Enrich GeoJSON features with our metadata
+// Enrich GeoJSON features with our metadata, merging multi-part polygons
 function enrichGeoJSON(raw: GeoJSON.FeatureCollection): GeoJSON.FeatureCollection {
-  return {
-    type: "FeatureCollection",
-    features: raw.features
-      .map((f) => {
-        const geoName = f.properties?.MUNICIPALI as string;
-        const meta = metaByGeoName.get(geoName);
-        if (!meta) return null; // skip municipalities not in our list (e.g. Naujan Lake)
-        return {
-          ...f,
-          properties: {
-            ...f.properties,
-            id: meta.id,
-            name: meta.name,
-            lotCount: meta.lotCount,
-            floodRisk: meta.floodRisk,
-            wildfireRisk: meta.wildfireRisk,
-          },
-        };
-      })
-      .filter(Boolean) as GeoJSON.Feature[],
-  };
+  // Group features by municipality name
+  const grouped = new Map<string, GeoJSON.Feature[]>();
+  for (const f of raw.features) {
+    const geoName = f.properties?.MUNICIPALI as string;
+    const meta = metaByGeoName.get(geoName);
+    if (!meta) continue;
+    if (!grouped.has(meta.id)) grouped.set(meta.id, []);
+    grouped.get(meta.id)!.push(f);
+  }
+
+  const features: GeoJSON.Feature[] = [];
+  for (const [id, group] of grouped) {
+    const meta = municipalityMeta.find((m) => m.id === id)!;
+    if (group.length === 1) {
+      features.push({
+        ...group[0],
+        properties: { ...group[0].properties, id: meta.id, name: meta.name, lotCount: meta.lotCount, floodRisk: meta.floodRisk, wildfireRisk: meta.wildfireRisk },
+      });
+    } else {
+      // Merge into MultiPolygon
+      const polygons: GeoJSON.Position[][][] = [];
+      for (const f of group) {
+        if (f.geometry.type === "Polygon") {
+          polygons.push((f.geometry as GeoJSON.Polygon).coordinates);
+        } else if (f.geometry.type === "MultiPolygon") {
+          polygons.push(...(f.geometry as GeoJSON.MultiPolygon).coordinates);
+        }
+      }
+      features.push({
+        type: "Feature",
+        properties: { id: meta.id, name: meta.name, lotCount: meta.lotCount, floodRisk: meta.floodRisk, wildfireRisk: meta.wildfireRisk },
+        geometry: { type: "MultiPolygon", coordinates: polygons },
+      });
+    }
+  }
+  return { type: "FeatureCollection", features };
 }
 
 const MunicipalityMap = () => {
