@@ -624,9 +624,6 @@ form button:hover { opacity: 0.9; }
 }
 .contact-agent-btn:hover { background: #f6c600; }
 .contact-agent-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-@media (max-width: 1000px) {
-  .sidebar-sticky { position: static; }
-}
 
 /* Recommendations */
 .recommendations-section {
