@@ -578,9 +578,7 @@ form button:hover { opacity: 0.9; }
   gap: 0;
 }
 .sidebar-sticky {
-  position: sticky;
-  top: 20px;
-  z-index: 10;
+  position: static;
   margin-bottom: 16px;
 }
 .inquiry-box-fixed {
@@ -626,9 +624,6 @@ form button:hover { opacity: 0.9; }
 }
 .contact-agent-btn:hover { background: #f6c600; }
 .contact-agent-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-@media (max-width: 1000px) {
-  .sidebar-sticky { position: static; }
-}
 
 /* Recommendations */
 .recommendations-section {
