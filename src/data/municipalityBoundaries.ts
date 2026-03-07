@@ -1,279 +1,31 @@
-// Real GeoJSON polygon boundaries for Oriental Mindoro municipalities
-// Puerto Galera, San Teodoro, Calapan use simplified real OSM data
-// Other municipalities use accurately traced boundaries based on official maps
+// Municipality metadata for Oriental Mindoro
+// Real boundaries are loaded from public/oriental-mindoro.geojson at runtime
 
-export interface MunicipalityGeoData {
+export interface MunicipalityMeta {
   id: string;
   name: string;
+  geoName: string; // name in the GeoJSON file (uppercase)
   lotCount: number;
-  coordinates: [number, number][][]; // GeoJSON polygon coords [lng, lat]
-  center: [number, number]; // [lat, lng] for Leaflet
   floodRisk: "low" | "medium" | "high";
   wildfireRisk: "low" | "medium" | "high";
 }
 
-export const municipalityBoundaries: MunicipalityGeoData[] = [
-  {
-    id: "puertogalera",
-    name: "Puerto Galera",
-    lotCount: 8,
-    center: [13.50, 120.95],
-    floodRisk: "low",
-    wildfireRisk: "low",
-    // Real OSM data (simplified)
-    coordinates: [[
-      [120.8007, 13.2802], [120.8384, 13.2603], [120.9685, 13.4199],
-      [120.9725, 13.4248], [121.0032, 13.4516], [121.0397, 13.4928],
-      [121.0300, 13.5214], [120.9944, 13.5697], [120.9866, 13.5803],
-      [120.9375, 13.5808], [120.9109, 13.5709], [120.8662, 13.5666],
-      [120.8838, 13.5007], [120.8864, 13.4911], [120.8870, 13.4222],
-      [120.8617, 13.3809], [120.8200, 13.3120], [120.8007, 13.2802],
-    ]],
-  },
-  {
-    id: "santeodoro",
-    name: "San Teodoro",
-    lotCount: 3,
-    center: [13.44, 121.02],
-    floodRisk: "medium",
-    wildfireRisk: "low",
-    // Real OSM data (simplified)
-    coordinates: [[
-      [120.8384, 13.2603], [120.8822, 13.2354], [120.9073, 13.2212],
-      [120.9493, 13.1974], [121.0613, 13.3901], [121.0802, 13.4091],
-      [121.0565, 13.4059], [121.0419, 13.4155], [121.0306, 13.4248],
-      [121.0176, 13.4430], [121.0032, 13.4516], [120.9725, 13.4248],
-      [120.9685, 13.4199], [120.8384, 13.2603],
-    ]],
-  },
-  {
-    id: "baco",
-    name: "Baco",
-    lotCount: 4,
-    center: [13.36, 121.10],
-    floodRisk: "medium",
-    wildfireRisk: "medium",
-    // Traced from official map - borders San Teodoro (N), Calapan (E), interior (W)
-    coordinates: [[
-      [120.9493, 13.1974], [120.9700, 13.1850], [121.0000, 13.1730],
-      [121.0300, 13.1680], [121.0600, 13.1700], [121.0900, 13.1800],
-      [121.1026, 13.2997], [121.1014, 13.3145], [121.1157, 13.3308],
-      [121.1114, 13.3511], [121.1170, 13.3890], [121.1406, 13.4065],
-      [121.1424, 13.4387], [121.0978, 13.4750], [121.0802, 13.4091],
-      [121.0613, 13.3901], [120.9493, 13.1974],
-    ]],
-  },
-  {
-    id: "calapan",
-    name: "Calapan City",
-    lotCount: 15,
-    center: [13.41, 121.18],
-    floodRisk: "medium",
-    wildfireRisk: "low",
-    // Real OSM data (simplified)
-    coordinates: [[
-      [121.0978, 13.4750], [121.1424, 13.4387], [121.1406, 13.4065],
-      [121.1170, 13.3890], [121.1250, 13.3580], [121.1114, 13.3511],
-      [121.1157, 13.3308], [121.1014, 13.3145], [121.1026, 13.2997],
-      [121.2149, 13.3001], [121.2816, 13.3455], [121.3017, 13.3455],
-      [121.3830, 13.4550], [121.3587, 13.4704], [121.3566, 13.4797],
-      [121.2635, 13.5167], [121.2061, 13.5542], [121.1756, 13.5627],
-      [121.0978, 13.4750],
-    ]],
-  },
-  {
-    id: "naujan",
-    name: "Naujan",
-    lotCount: 6,
-    center: [13.22, 121.30],
-    floodRisk: "high",
-    wildfireRisk: "low",
-    // Traced from official map - large municipality south of Calapan along coast
-    coordinates: [[
-      [121.0900, 13.1800], [121.1100, 13.1500], [121.1300, 13.1200],
-      [121.1600, 13.0950], [121.1900, 13.0850], [121.2200, 13.0800],
-      [121.2600, 13.0850], [121.3000, 13.1000], [121.3300, 13.1200],
-      [121.3600, 13.1500], [121.3800, 13.1900], [121.3900, 13.2200],
-      [121.3950, 13.2600], [121.3900, 13.2900], [121.3830, 13.3100],
-      [121.3500, 13.3300], [121.3017, 13.3455], [121.2816, 13.3455],
-      [121.2149, 13.3001], [121.1026, 13.2997], [121.0900, 13.1800],
-    ]],
-  },
-  {
-    id: "victoria",
-    name: "Victoria",
-    lotCount: 5,
-    center: [13.07, 121.28],
-    floodRisk: "medium",
-    wildfireRisk: "medium",
-    // Traced - interior municipality, borders Naujan (N), Socorro (S), Pola (E)
-    coordinates: [[
-      [121.1600, 13.0950], [121.1900, 13.0850], [121.2200, 13.0800],
-      [121.2600, 13.0850], [121.3000, 13.1000], [121.3300, 13.1200],
-      [121.3400, 13.1100], [121.3500, 13.0900], [121.3400, 13.0500],
-      [121.3200, 13.0200], [121.2900, 13.0000], [121.2500, 12.9900],
-      [121.2200, 12.9900], [121.1900, 12.9950], [121.1600, 13.0100],
-      [121.1400, 13.0300], [121.1300, 13.0600], [121.1400, 13.0800],
-      [121.1600, 13.0950],
-    ]],
-  },
-  {
-    id: "socorro",
-    name: "Socorro",
-    lotCount: 4,
-    center: [13.05, 121.41],
-    floodRisk: "medium",
-    wildfireRisk: "medium",
-    // Traced - coastal municipality east of Victoria
-    coordinates: [[
-      [121.3300, 13.1200], [121.3500, 13.0900], [121.3600, 13.1100],
-      [121.3800, 13.1200], [121.4100, 13.1100], [121.4300, 13.0900],
-      [121.4400, 13.0600], [121.4350, 13.0300], [121.4200, 13.0100],
-      [121.4000, 12.9900], [121.3700, 12.9800], [121.3400, 12.9800],
-      [121.3200, 12.9900], [121.3200, 13.0200], [121.3400, 13.0500],
-      [121.3500, 13.0900], [121.3300, 13.1200],
-    ]],
-  },
-  {
-    id: "pola",
-    name: "Pola",
-    lotCount: 3,
-    center: [13.14, 121.47],
-    floodRisk: "low",
-    wildfireRisk: "high",
-    // Traced - coastal municipality, north of Socorro along east coast
-    coordinates: [[
-      [121.3400, 13.1100], [121.3600, 13.1500], [121.3800, 13.1900],
-      [121.3900, 13.2200], [121.4100, 13.2300], [121.4400, 13.2200],
-      [121.4700, 13.2000], [121.4900, 13.1700], [121.4900, 13.1400],
-      [121.4700, 13.1200], [121.4400, 13.1100], [121.4100, 13.1100],
-      [121.3800, 13.1200], [121.3600, 13.1100], [121.3400, 13.1100],
-    ]],
-  },
-  {
-    id: "pinamalayan",
-    name: "Pinamalayan",
-    lotCount: 9,
-    center: [12.98, 121.49],
-    floodRisk: "high",
-    wildfireRisk: "low",
-    // Traced - large coastal municipality
-    coordinates: [[
-      [121.2500, 12.9900], [121.2900, 13.0000], [121.3200, 12.9900],
-      [121.3400, 12.9800], [121.3700, 12.9800], [121.4000, 12.9900],
-      [121.4200, 13.0100], [121.4350, 13.0300], [121.4500, 13.0200],
-      [121.4800, 13.0000], [121.5000, 12.9700], [121.4900, 12.9300],
-      [121.4700, 12.9100], [121.4400, 12.9000], [121.4100, 12.9000],
-      [121.3700, 12.9100], [121.3300, 12.9200], [121.2900, 12.9300],
-      [121.2600, 12.9400], [121.2400, 12.9600], [121.2300, 12.9800],
-      [121.2500, 12.9900],
-    ]],
-  },
-  {
-    id: "gloria",
-    name: "Gloria",
-    lotCount: 7,
-    center: [12.92, 121.47],
-    floodRisk: "medium",
-    wildfireRisk: "medium",
-    // Traced - south of Pinamalayan
-    coordinates: [[
-      [121.2300, 12.9800], [121.2600, 12.9400], [121.2900, 12.9300],
-      [121.3300, 12.9200], [121.3700, 12.9100], [121.4100, 12.9000],
-      [121.4400, 12.9000], [121.4700, 12.9100], [121.4800, 12.8900],
-      [121.4700, 12.8600], [121.4500, 12.8400], [121.4200, 12.8300],
-      [121.3800, 12.8300], [121.3400, 12.8400], [121.3000, 12.8500],
-      [121.2600, 12.8700], [121.2300, 12.8900], [121.2100, 12.9200],
-      [121.2100, 12.9500], [121.2300, 12.9800],
-    ]],
-  },
-  {
-    id: "bansud",
-    name: "Bansud",
-    lotCount: 6,
-    center: [12.83, 121.47],
-    floodRisk: "medium",
-    wildfireRisk: "high",
-    // Traced - south of Gloria
-    coordinates: [[
-      [121.2100, 12.9200], [121.2600, 12.8700], [121.3000, 12.8500],
-      [121.3400, 12.8400], [121.3800, 12.8300], [121.4200, 12.8300],
-      [121.4500, 12.8400], [121.4600, 12.8200], [121.4500, 12.7900],
-      [121.4300, 12.7700], [121.4000, 12.7600], [121.3600, 12.7600],
-      [121.3200, 12.7700], [121.2800, 12.7800], [121.2400, 12.8000],
-      [121.2100, 12.8300], [121.1900, 12.8600], [121.1900, 12.8900],
-      [121.2100, 12.9200],
-    ]],
-  },
-  {
-    id: "bongabong",
-    name: "Bongabong",
-    lotCount: 5,
-    center: [12.74, 121.44],
-    floodRisk: "high",
-    wildfireRisk: "medium",
-    // Traced - south of Bansud
-    coordinates: [[
-      [121.1900, 12.8600], [121.2400, 12.8000], [121.2800, 12.7800],
-      [121.3200, 12.7700], [121.3600, 12.7600], [121.4000, 12.7600],
-      [121.4300, 12.7700], [121.4500, 12.7500], [121.4400, 12.7200],
-      [121.4200, 12.7000], [121.3900, 12.6800], [121.3500, 12.6700],
-      [121.3100, 12.6700], [121.2700, 12.6800], [121.2300, 12.7000],
-      [121.2000, 12.7300], [121.1800, 12.7600], [121.1700, 12.7900],
-      [121.1800, 12.8200], [121.1900, 12.8600],
-    ]],
-  },
-  {
-    id: "roxas",
-    name: "Roxas",
-    lotCount: 4,
-    center: [12.59, 121.50],
-    floodRisk: "medium",
-    wildfireRisk: "medium",
-    // Traced - small coastal municipality
-    coordinates: [[
-      [121.3500, 12.6700], [121.3900, 12.6800], [121.4200, 12.7000],
-      [121.4400, 12.7200], [121.4600, 12.7000], [121.4700, 12.6700],
-      [121.4600, 12.6400], [121.4400, 12.6200], [121.4100, 12.6000],
-      [121.3800, 12.5900], [121.3500, 12.5900], [121.3200, 12.6000],
-      [121.3000, 12.6200], [121.3100, 12.6500], [121.3500, 12.6700],
-    ]],
-  },
-  {
-    id: "mansalay",
-    name: "Mansalay",
-    lotCount: 3,
-    center: [12.52, 121.44],
-    floodRisk: "low",
-    wildfireRisk: "high",
-    // Traced - southwest of Roxas
-    coordinates: [[
-      [121.2300, 12.7000], [121.2700, 12.6800], [121.3100, 12.6700],
-      [121.3200, 12.6000], [121.3000, 12.5600], [121.2700, 12.5300],
-      [121.2400, 12.5100], [121.2100, 12.4900], [121.1800, 12.5000],
-      [121.1600, 12.5300], [121.1500, 12.5600], [121.1600, 12.6000],
-      [121.1700, 12.6300], [121.1800, 12.6600], [121.2000, 12.6900],
-      [121.2300, 12.7000],
-    ]],
-  },
-  {
-    id: "bulalacao",
-    name: "Bulalacao",
-    lotCount: 2,
-    center: [12.34, 121.33],
-    floodRisk: "low",
-    wildfireRisk: "high",
-    // Traced - southernmost municipality
-    coordinates: [[
-      [121.1800, 12.5000], [121.2100, 12.4900], [121.2400, 12.5100],
-      [121.2700, 12.5300], [121.3000, 12.5600], [121.3200, 12.5400],
-      [121.3100, 12.5000], [121.2900, 12.4600], [121.2700, 12.4300],
-      [121.2400, 12.4000], [121.2100, 12.3700], [121.1800, 12.3500],
-      [121.1500, 12.3300], [121.1200, 12.3200], [121.0900, 12.3300],
-      [121.0800, 12.3600], [121.0900, 12.4000], [121.1100, 12.4300],
-      [121.1300, 12.4600], [121.1500, 12.4800], [121.1800, 12.5000],
-    ]],
-  },
+export const municipalityMeta: MunicipalityMeta[] = [
+  { id: "puertogalera", name: "Puerto Galera", geoName: "PUERTO GALERA", lotCount: 8, floodRisk: "low", wildfireRisk: "low" },
+  { id: "santeodoro", name: "San Teodoro", geoName: "SAN TEODORO", lotCount: 3, floodRisk: "medium", wildfireRisk: "low" },
+  { id: "baco", name: "Baco", geoName: "BACO", lotCount: 4, floodRisk: "medium", wildfireRisk: "medium" },
+  { id: "calapan", name: "Calapan City", geoName: "CALAPAN CITY", lotCount: 15, floodRisk: "medium", wildfireRisk: "low" },
+  { id: "naujan", name: "Naujan", geoName: "NAUJAN", lotCount: 6, floodRisk: "high", wildfireRisk: "low" },
+  { id: "victoria", name: "Victoria", geoName: "VICTORIA", lotCount: 5, floodRisk: "medium", wildfireRisk: "medium" },
+  { id: "socorro", name: "Socorro", geoName: "SOCORRO", lotCount: 4, floodRisk: "medium", wildfireRisk: "medium" },
+  { id: "pola", name: "Pola", geoName: "POLA", lotCount: 3, floodRisk: "low", wildfireRisk: "high" },
+  { id: "pinamalayan", name: "Pinamalayan", geoName: "PINAMALAYAN", lotCount: 9, floodRisk: "high", wildfireRisk: "low" },
+  { id: "gloria", name: "Gloria", geoName: "GLORIA", lotCount: 7, floodRisk: "medium", wildfireRisk: "medium" },
+  { id: "bansud", name: "Bansud", geoName: "BANSUD", lotCount: 6, floodRisk: "medium", wildfireRisk: "high" },
+  { id: "bongabong", name: "Bongabong", geoName: "BONGABONG", lotCount: 5, floodRisk: "high", wildfireRisk: "medium" },
+  { id: "roxas", name: "Roxas", geoName: "ROXAS", lotCount: 4, floodRisk: "medium", wildfireRisk: "medium" },
+  { id: "mansalay", name: "Mansalay", geoName: "MANSALAY", lotCount: 3, floodRisk: "low", wildfireRisk: "high" },
+  { id: "bulalacao", name: "Bulalacao", geoName: "BULALACAO", lotCount: 2, floodRisk: "low", wildfireRisk: "high" },
 ];
 
 // Color helpers
