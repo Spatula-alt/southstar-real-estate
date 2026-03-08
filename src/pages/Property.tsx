@@ -80,9 +80,7 @@ const Property = () => {
         {/* Map */}
         <section className="map-section">
           <h2 id="propertyTitle">{property.title}</h2>
-          <div className="map-box">
-            <iframe src={property.map} loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Property Location Map" />
-          </div>
+          <PropertyMunicipalityMap placeId={placeId} />
         </section>
 
         {/* Two Column Layout */}
