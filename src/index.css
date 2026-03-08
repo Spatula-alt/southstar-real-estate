@@ -32,11 +32,15 @@ body {
 /* Header */
 .site-header {
   background: linear-gradient(90deg, var(--primary-dark), var(--primary));
-  padding: 28px 0;
+  padding: 18px 0;
   text-align: center;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
-.site-header h1 { font-size: 2rem; font-weight: 700; }
+.site-header h1 { font-size: 1.5rem; font-weight: 700; margin: 0; }
 .site-header p, .site-header .tag {
   opacity: .95;
   margin-top: 6px;
