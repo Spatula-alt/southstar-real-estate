@@ -294,8 +294,8 @@ const MunicipalityMap = forwardRef<MunicipalityMapHandle>((_, ref) => {
       </MapContainer>
 
       <div className="map-legend">
-        <span><span className="legend-dot" style={{ background: "#149f42" }} /> Has Properties</span>
-        <span><span className="legend-dot" style={{ background: "#ffd700" }} /> Coming Soon</span>
+        <span><span className="legend-dot" style={{ background: "rgba(20, 159, 66, 0.7)" }} /> Has Properties</span>
+        <span><span className="legend-dot" style={{ background: "rgba(200, 180, 40, 0.65)" }} /> Coming Soon</span>
         {layers.flood && <span><span className="legend-dot" style={{ background: "rgba(30,100,220,0.5)" }} /> Flood risk</span>}
         {layers.wildfire && <span><span className="legend-dot" style={{ background: "rgba(220,50,30,0.5)" }} /> Wildfire risk</span>}
       </div>
