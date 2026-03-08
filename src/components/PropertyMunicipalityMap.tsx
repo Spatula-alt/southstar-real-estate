@@ -27,7 +27,7 @@ const PROPERTY_PINS: Record<string, { lat: number; lng: number; label: string }[
     { lat: 13.064125, lng: 121.489163, label: "Lot 3" },
     { lat: 12.983628, lng: 121.480796, label: "Lot 4" },
   ],
-  calapan: [
+  baco: [
     { lat: 13.356916, lng: 121.121027, label: "Lot 1" },
   ],
   bansud: [
