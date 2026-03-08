@@ -6,6 +6,7 @@ import AyalaFooter from "@/components/AyalaFooter";
 import PropertyOverview from "@/components/PropertyOverview";
 import SharePanel from "@/components/SharePanel";
 import BuyAbilityWidget from "@/components/BuyAbilityWidget";
+import PropertyMunicipalityMap from "@/components/PropertyMunicipalityMap";
 import { supabase } from "@/integrations/supabase/client";
 
 const propertyData: Record<string, { title: string; map: string; img: string }> = {
