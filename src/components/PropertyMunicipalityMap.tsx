@@ -115,18 +115,29 @@ const FitBounds = ({ geojsonData, placeId }: { geojsonData: GeoJSON.FeatureColle
 
 /* Property marker with popup card */
 const PropertyMarker = ({ pin, placeId, municipalityName }: { pin: PropertyPin; placeId: string; municipalityName: string }) => {
-  const navigate = useNavigate();
+  const map = useMap();
 
-  const handleClick = () => {
-    navigate(`/property?place=${placeId}&lot=${pin.label.replace(/\s+/g, '-').toLowerCase()}`);
-    // Force reload to show the property details
-    window.location.href = `/property?place=${placeId}&lot=${pin.label.replace(/\s+/g, '-').toLowerCase()}`;
+  const handleDblClick = () => {
+    // Smooth zoom into the marker location
+    map.flyTo([pin.lat, pin.lng], 16, { duration: 1.2 });
+    // Navigate after a short delay so the zoom is visible
+    setTimeout(() => {
+      window.location.href = `/property?place=${placeId}&lot=${pin.label.replace(/\s+/g, '-').toLowerCase()}`;
+    }, 1300);
   };
 
   return (
-    <Marker position={[pin.lat, pin.lng]} icon={starIcon} eventHandlers={{ click: handleClick }}>
-      <Popup className="property-pin-popup" closeButton={true} autoPan={true}>
-        <div style={{ width: 220, cursor: "pointer" }} onClick={handleClick}>
+    <Marker
+      position={[pin.lat, pin.lng]}
+      icon={starIcon}
+      eventHandlers={{
+        mouseover: (e) => { e.target.openPopup(); },
+        mouseout: (e) => { e.target.closePopup(); },
+        dblclick: handleDblClick,
+      }}
+    >
+      <Popup className="property-pin-popup" closeButton={false} autoPan={false}>
+        <div style={{ width: 220 }}>
           {pin.image ? (
             <img
               src={pin.image}
@@ -158,7 +169,6 @@ const PropertyMarker = ({ pin, placeId, municipalityName }: { pin: PropertyPin; 
           </div>
         </div>
       </Popup>
-      <Tooltip direction="top" offset={[0, -14]}>{pin.label}</Tooltip>
     </Marker>
   );
 };
