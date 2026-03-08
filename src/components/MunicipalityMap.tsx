@@ -12,7 +12,7 @@ import {
 import "leaflet/dist/leaflet.css";
 
 const MUNICIPALITIES_WITH_PROPERTIES = new Set([
-  "calapan", "pinamalayan", "gloria", "bansud", "bongabong"
+  "baco", "pinamalayan", "gloria", "bansud", "bongabong"
 ]);
 
 const metaByGeoName = new Map(
@@ -226,7 +226,7 @@ const MunicipalityMap = forwardRef<MunicipalityMapHandle>((_, ref) => {
       });
 
       layer.bindTooltip(
-        `<strong>${props.name}</strong><br/>${hasProps ? `${props.lotCount} lots available` : "No properties yet"}${place ? `<br/>${place.price}` : ""}`,
+        `<strong>${props.name}</strong><br/>${hasProps ? `${props.lotCount} lots available` : "No properties yet"}`,
         { direction: "top", sticky: true, className: "municipality-tooltip" }
       );
     },

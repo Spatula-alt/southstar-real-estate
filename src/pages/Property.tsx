@@ -97,7 +97,7 @@ const Property = () => {
               <h2>Property Details</h2>
               <div className="meta">
                 <div><strong>Location:</strong> {property.title}, Oriental Mindoro</div>
-                <div><strong>Price:</strong> {placeInfo?.price || "Contact for pricing"}</div>
+                <div><strong>Price:</strong> Contact for pricing</div>
                 <div><strong>Type:</strong> {placeInfo?.type || "Land"}</div>
               </div>
               <h3>Description</h3>
@@ -112,7 +112,7 @@ const Property = () => {
             </section>
 
             {/* Property Overview Table */}
-            <PropertyOverview title={property.title} type={placeInfo?.type || "Lot"} price={placeInfo?.price || ""} placeId={placeId} />
+            <PropertyOverview title={property.title} type={placeInfo?.type || "Lot"} price="" placeId={placeId} />
 
             {/* BuyAbility Widget - BELOW overview */}
             <BuyAbilityWidget />
@@ -157,7 +157,7 @@ const Property = () => {
                   <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
                   <div className="recommendation-details">
                     <h4>{place.name}</h4>
-                    <p>{place.price} · {place.type}</p>
+                    <p>{place.type}</p>
                     <button className="view-btn">View Property</button>
                   </div>
                 </article>
@@ -167,7 +167,7 @@ const Property = () => {
                   <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
                   <div className="recommendation-details">
                     <h4>{place.name}</h4>
-                    <p>{place.price} · {place.type}</p>
+                    <p>{place.type}</p>
                     <button className="view-btn">View Property</button>
                   </div>
                 </article>

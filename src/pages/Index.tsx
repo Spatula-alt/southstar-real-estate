@@ -91,7 +91,7 @@ const Index = () => {
                   <div className="property-details">
                     <div>
                       <h3>{place.name}</h3>
-                      <p>{place.price} · {place.type}</p>
+                      <p>{place.type}</p>
                     </div>
                     <button className="buy-btn" onClick={() => handleInquire(place.id)}>
                       Inquire Now

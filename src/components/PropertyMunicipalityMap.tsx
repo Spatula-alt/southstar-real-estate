@@ -1,40 +1,49 @@
 import { useState, useEffect, useCallback } from "react";
-import { MapContainer, TileLayer, GeoJSON, useMap, Marker, Tooltip } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMap, Marker, Popup, Tooltip } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import { municipalityMeta } from "@/data/municipalityBoundaries";
 import "leaflet/dist/leaflet.css";
 
-/* Property pin coordinates by municipality */
-const PROPERTY_PINS: Record<string, { lat: number; lng: number; label: string }[]> = {
+/* Property pin data per municipality */
+export interface PropertyPin {
+  lat: number;
+  lng: number;
+  label: string;
+  type: string;
+  image?: string;
+}
+
+export const PROPERTY_PINS: Record<string, PropertyPin[]> = {
   gloria: [
-    { lat: 12.972629, lng: 121.472194, label: "Lot 1" },
-    { lat: 12.972355, lng: 121.471264, label: "Lot 2" },
-    { lat: 12.972592, lng: 121.470920, label: "Lot 3" },
-    { lat: 12.974671, lng: 121.463037, label: "Lot 4" },
-    { lat: 12.971994, lng: 121.431719, label: "Lot 5" },
-    { lat: 12.959009, lng: 121.434975, label: "Lot 6" },
-    { lat: 12.956173, lng: 121.440140, label: "Lot 7" },
-    { lat: 12.952511, lng: 121.452285, label: "Lot 8" },
-    { lat: 12.953227, lng: 121.463948, label: "Lot 9" },
-    { lat: 12.953164, lng: 121.476832, label: "Lot 10" },
-    { lat: 12.896612, lng: 121.460913, label: "Lot 11" },
-    { lat: 12.934657, lng: 121.482311, label: "Lot 12" },
-    { lat: 12.935967, lng: 121.473224, label: "Lot 13" },
+    { lat: 12.972629, lng: 121.472194, label: "Lot 1", type: "Vacant Lot" },
+    { lat: 12.972355, lng: 121.471264, label: "Lot 2", type: "Vacant Lot" },
+    { lat: 12.972592, lng: 121.470920, label: "Lot 3", type: "Vacant Lot" },
+    { lat: 12.974671, lng: 121.463037, label: "Lot 4", type: "Vacant Lot" },
+    { lat: 12.971994, lng: 121.431719, label: "Lot 5", type: "Vacant Lot" },
+    { lat: 12.959009, lng: 121.434975, label: "Lot 6", type: "Vacant Lot" },
+    { lat: 12.956173, lng: 121.440140, label: "Lot 7", type: "Vacant Lot" },
+    { lat: 12.952511, lng: 121.452285, label: "Lot 8", type: "Vacant Lot" },
+    { lat: 12.953227, lng: 121.463948, label: "Lot 9", type: "Vacant Lot" },
+    { lat: 12.953164, lng: 121.476832, label: "Lot 10", type: "Vacant Lot" },
+    { lat: 12.896612, lng: 121.460913, label: "Lot 11", type: "Vacant Lot" },
+    { lat: 12.934657, lng: 121.482311, label: "Lot 12", type: "Vacant Lot" },
+    { lat: 12.935967, lng: 121.473224, label: "Lot 13", type: "Vacant Lot" },
   ],
   pinamalayan: [
-    { lat: 13.014984, lng: 121.459439, label: "Lot 1" },
-    { lat: 13.026152, lng: 121.476916, label: "Lot 2" },
-    { lat: 13.064125, lng: 121.489163, label: "Lot 3" },
-    { lat: 12.983628, lng: 121.480796, label: "Lot 4" },
+    { lat: 13.014984, lng: 121.459439, label: "Lot 1", type: "Vacant Lot" },
+    { lat: 13.026152, lng: 121.476916, label: "Lot 2", type: "Vacant Lot" },
+    { lat: 13.064125, lng: 121.489163, label: "Lot 3", type: "Vacant Lot" },
+    { lat: 12.983628, lng: 121.480796, label: "Lot 4", type: "Vacant Lot" },
   ],
   baco: [
-    { lat: 13.356916, lng: 121.121027, label: "Lot 1" },
+    { lat: 13.356916, lng: 121.121027, label: "Lot 1", type: "Vacant Lot" },
   ],
   bansud: [
-    { lat: 12.853409, lng: 121.479577, label: "Lot 1" },
+    { lat: 12.853409, lng: 121.479577, label: "Lot 1", type: "Vacant Lot" },
   ],
   bongabong: [
-    { lat: 12.785867, lng: 121.475386, label: "Lot 1" },
+    { lat: 12.785867, lng: 121.475386, label: "Lot 1", type: "Vacant Lot" },
   ],
 };
 
@@ -90,10 +99,9 @@ function enrichGeoJSON(raw: GeoJSON.FeatureCollection): GeoJSON.FeatureCollectio
   return { type: "FeatureCollection", features };
 }
 
-/* Auto-fit bounds to the highlighted municipality */
+/* Auto-fit bounds */
 const FitBounds = ({ geojsonData, placeId }: { geojsonData: GeoJSON.FeatureCollection; placeId: string }) => {
   const map = useMap();
-
   useEffect(() => {
     const feature = geojsonData.features.find((f) => f.properties?.id === placeId);
     if (feature) {
@@ -102,8 +110,57 @@ const FitBounds = ({ geojsonData, placeId }: { geojsonData: GeoJSON.FeatureColle
       map.fitBounds(bounds, { padding: [30, 30], maxZoom: 12 });
     }
   }, [map, geojsonData, placeId]);
-
   return null;
+};
+
+/* Property marker with popup card */
+const PropertyMarker = ({ pin, placeId, municipalityName }: { pin: PropertyPin; placeId: string; municipalityName: string }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/property?place=${placeId}&lot=${pin.label.replace(/\s+/g, '-').toLowerCase()}`);
+    // Force reload to show the property details
+    window.location.href = `/property?place=${placeId}&lot=${pin.label.replace(/\s+/g, '-').toLowerCase()}`;
+  };
+
+  return (
+    <Marker position={[pin.lat, pin.lng]} icon={starIcon} eventHandlers={{ click: handleClick }}>
+      <Popup className="property-pin-popup" closeButton={true} autoPan={true}>
+        <div style={{ width: 220, cursor: "pointer" }} onClick={handleClick}>
+          {pin.image ? (
+            <img
+              src={pin.image}
+              alt={pin.label}
+              style={{ width: "100%", height: 120, objectFit: "cover", borderRadius: "6px 6px 0 0" }}
+            />
+          ) : (
+            <div style={{
+              width: "100%",
+              height: 120,
+              background: "linear-gradient(135deg, hsl(142 40% 40%), hsl(142 30% 55%))",
+              borderRadius: "6px 6px 0 0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#fff",
+              fontSize: 14,
+              fontWeight: 600,
+            }}>
+              {municipalityName} - {pin.label}
+            </div>
+          )}
+          <div style={{ padding: "10px 12px" }}>
+            <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 4 }}>
+              For Sale — {municipalityName}
+            </div>
+            <div style={{ fontSize: 12, color: "#555", marginBottom: 2 }}>Unit</div>
+            <div style={{ fontSize: 13, fontWeight: 600 }}>{pin.type}</div>
+          </div>
+        </div>
+      </Popup>
+      <Tooltip direction="top" offset={[0, -14]}>{pin.label}</Tooltip>
+    </Marker>
+  );
 };
 
 interface Props {
@@ -180,29 +237,22 @@ const PropertyMunicipalityMap = ({ placeId }: Props) => {
         <GeoJSON data={geojsonData} style={style} onEachFeature={onEachFeature} />
         <FitBounds geojsonData={geojsonData} placeId={placeId} />
         {(PROPERTY_PINS[placeId] || []).map((pin, i) => (
-          <Marker key={i} position={[pin.lat, pin.lng]} icon={starIcon}>
-            <Tooltip direction="top" offset={[0, -14]}>{pin.label}</Tooltip>
-          </Marker>
+          <PropertyMarker
+            key={i}
+            pin={pin}
+            placeId={placeId}
+            municipalityName={meta?.name || placeId}
+          />
         ))}
       </MapContainer>
 
       {/* Status badge */}
       {!hasProperties && (
         <div style={{
-          position: "absolute",
-          top: 12,
-          right: 12,
-          zIndex: 10,
-          background: "rgba(200, 170, 30, 0.92)",
-          color: "#fff",
-          padding: "8px 16px",
-          borderRadius: 8,
-          fontWeight: 700,
-          fontSize: 14,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
+          position: "absolute", top: 12, right: 12, zIndex: 10,
+          background: "rgba(200, 170, 30, 0.92)", color: "#fff",
+          padding: "8px 16px", borderRadius: 8, fontWeight: 700, fontSize: 14,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", gap: 6,
         }}>
           ⚠️ No properties available yet in {meta?.name || "this area"}
         </div>
@@ -210,20 +260,10 @@ const PropertyMunicipalityMap = ({ placeId }: Props) => {
 
       {hasProperties && (
         <div style={{
-          position: "absolute",
-          top: 12,
-          right: 12,
-          zIndex: 10,
-          background: "rgba(20, 140, 60, 0.92)",
-          color: "#fff",
-          padding: "8px 16px",
-          borderRadius: 8,
-          fontWeight: 700,
-          fontSize: 14,
-          boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
-          display: "flex",
-          alignItems: "center",
-          gap: 6,
+          position: "absolute", top: 12, right: 12, zIndex: 10,
+          background: "rgba(20, 140, 60, 0.92)", color: "#fff",
+          padding: "8px 16px", borderRadius: 8, fontWeight: 700, fontSize: 14,
+          boxShadow: "0 2px 8px rgba(0,0,0,0.25)", display: "flex", alignItems: "center", gap: 6,
         }}>
           ✅ {meta?.lotCount} lots available
         </div>
