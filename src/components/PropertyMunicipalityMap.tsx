@@ -161,6 +161,11 @@ const PropertyMunicipalityMap = ({ placeId }: Props) => {
         />
         <GeoJSON data={geojsonData} style={style} onEachFeature={onEachFeature} />
         <FitBounds geojsonData={geojsonData} placeId={placeId} />
+        {(PROPERTY_PINS[placeId] || []).map((pin, i) => (
+          <Marker key={i} position={[pin.lat, pin.lng]} icon={starIcon}>
+            <Tooltip direction="top" offset={[0, -14]}>{pin.label}</Tooltip>
+          </Marker>
+        ))}
       </MapContainer>
 
       {/* Status badge */}
