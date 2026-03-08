@@ -112,7 +112,7 @@ const Property = () => {
             </section>
 
             {/* Property Overview Table */}
-            <PropertyOverview title={property.title} type={placeInfo?.type || "Lot"} price={placeInfo?.price || ""} placeId={placeId} />
+            <PropertyOverview title={property.title} type={placeInfo?.type || "Lot"} price="" placeId={placeId} />
 
             {/* BuyAbility Widget - BELOW overview */}
             <BuyAbilityWidget />
