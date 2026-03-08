@@ -1,8 +1,31 @@
 import { useState, useEffect, useCallback } from "react";
-import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMap, Marker, Tooltip } from "react-leaflet";
 import L from "leaflet";
 import { municipalityMeta } from "@/data/municipalityBoundaries";
 import "leaflet/dist/leaflet.css";
+
+/* Property pin coordinates by municipality */
+const PROPERTY_PINS: Record<string, { lat: number; lng: number; label: string }[]> = {
+  gloria: [
+    { lat: 12.972629, lng: 121.472194, label: "Lot 1" },
+    { lat: 12.972355, lng: 121.471264, label: "Lot 2" },
+    { lat: 12.972592, lng: 121.470920, label: "Lot 3" },
+    { lat: 12.974671, lng: 121.463037, label: "Lot 4" },
+    { lat: 12.971994, lng: 121.431719, label: "Lot 5" },
+    { lat: 12.959009, lng: 121.434975, label: "Lot 6" },
+    { lat: 12.956173, lng: 121.440140, label: "Lot 7" },
+    { lat: 12.952511, lng: 121.452285, label: "Lot 8" },
+    { lat: 12.953227, lng: 121.463948, label: "Lot 9" },
+    { lat: 12.953164, lng: 121.476832, label: "Lot 10" },
+  ],
+};
+
+const starIcon = L.divIcon({
+  html: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="#ffd700" stroke="#b8860b" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  className: "",
+  iconSize: [28, 28],
+  iconAnchor: [14, 14],
+});
 
 const MUNICIPALITIES_WITH_PROPERTIES = new Set([
   "calapan", "pinamalayan", "gloria", "bansud", "bongabong"
