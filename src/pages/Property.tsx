@@ -97,7 +97,7 @@ const Property = () => {
               <h2>Property Details</h2>
               <div className="meta">
                 <div><strong>Location:</strong> {property.title}, Oriental Mindoro</div>
-                <div><strong>Price:</strong> {placeInfo?.price || "Contact for pricing"}</div>
+                <div><strong>Price:</strong> Contact for pricing</div>
                 <div><strong>Type:</strong> {placeInfo?.type || "Land"}</div>
               </div>
               <h3>Description</h3>
