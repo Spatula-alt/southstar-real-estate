@@ -89,7 +89,7 @@ const AppointmentScheduler = () => {
           <h4>Select Property (optional)</h4>
           <select value={property} onChange={(e) => setProperty(e.target.value)} className="scheduler-select">
             <option value="">Any property</option>
-            {places.map((p) => <option key={p.id} value={p.id}>{p.name} - {p.price}</option>)}
+            {places.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
           <button className="buy-btn" onClick={() => setStep(2)} style={{ marginTop: 16 }}>Next →</button>
         </div>
