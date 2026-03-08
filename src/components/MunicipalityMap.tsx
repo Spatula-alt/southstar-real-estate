@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, forwardRef, useImperativeHandle } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import { useNavigate } from "react-router-dom";
 import L from "leaflet";
@@ -11,12 +11,15 @@ import {
 } from "@/data/municipalityBoundaries";
 import "leaflet/dist/leaflet.css";
 
-// Build a name→meta lookup
+const MUNICIPALITIES_WITH_PROPERTIES = new Set([
+  "calapan", "pinamalayan", "gloria", "bansud", "bongabong"
+]);
+
 const metaByGeoName = new Map(
   municipalityMeta.map((m) => [m.geoName, m])
 );
 
-/* ---- Zoom-then-navigate helper ---- */
+/* ---- Zoom helper ---- */
 const ZoomNavigator = ({ target, onDone }: { target: { bounds: L.LatLngBounds; id: string } | null; onDone: () => void }) => {
   const map = useMap();
   const navigatedRef = useRef(false);
@@ -66,9 +69,30 @@ const LayerToggles = ({
   );
 };
 
-// Enrich GeoJSON features with our metadata, merging multi-part polygons
+/* ---- MapController: imperatively zoom to a municipality ---- */
+const MapController = forwardRef<
+  { zoomTo: (id: string) => void },
+  { geojsonData: GeoJSON.FeatureCollection | null; onZoomDone: (id: string) => void }
+>(({ geojsonData, onZoomDone }, ref) => {
+  const map = useMap();
+
+  useImperativeHandle(ref, () => ({
+    zoomTo: (id: string) => {
+      if (!geojsonData) return;
+      const feature = geojsonData.features.find((f) => f.properties?.id === id);
+      if (!feature) return;
+      const tempLayer = L.geoJSON(feature);
+      const bounds = tempLayer.getBounds();
+      map.flyToBounds(bounds, { duration: 1.2, padding: [40, 40] });
+      setTimeout(() => onZoomDone(id), 1400);
+    },
+  }));
+
+  return null;
+});
+MapController.displayName = "MapController";
+
 function enrichGeoJSON(raw: GeoJSON.FeatureCollection): GeoJSON.FeatureCollection {
-  // Group features by municipality name
   const grouped = new Map<string, GeoJSON.Feature[]>();
   for (const f of raw.features) {
     const geoName = f.properties?.MUNICIPALI as string;
@@ -87,7 +111,6 @@ function enrichGeoJSON(raw: GeoJSON.FeatureCollection): GeoJSON.FeatureCollectio
         properties: { ...group[0].properties, id: meta.id, name: meta.name, lotCount: meta.lotCount, floodRisk: meta.floodRisk, wildfireRisk: meta.wildfireRisk },
       });
     } else {
-      // Merge into MultiPolygon
       const polygons: GeoJSON.Position[][][] = [];
       for (const f of group) {
         if (f.geometry.type === "Polygon") {
@@ -106,12 +129,23 @@ function enrichGeoJSON(raw: GeoJSON.FeatureCollection): GeoJSON.FeatureCollectio
   return { type: "FeatureCollection", features };
 }
 
-const MunicipalityMap = () => {
+export interface MunicipalityMapHandle {
+  zoomToMunicipality: (id: string) => void;
+}
+
+const MunicipalityMap = forwardRef<MunicipalityMapHandle>((_, ref) => {
   const navigate = useNavigate();
   const [layers, setLayers] = useState({ heatmap: false, flood: false, wildfire: false });
   const [zoomTarget, setZoomTarget] = useState<{ bounds: L.LatLngBounds; id: string } | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [geojsonData, setGeojsonData] = useState<GeoJSON.FeatureCollection | null>(null);
+  const controllerRef = useRef<{ zoomTo: (id: string) => void }>(null);
+
+  useImperativeHandle(ref, () => ({
+    zoomToMunicipality: (id: string) => {
+      controllerRef.current?.zoomTo(id);
+    },
+  }));
 
   useEffect(() => {
     fetch("/oriental-mindoro.geojson")
@@ -138,18 +172,23 @@ const MunicipalityMap = () => {
     }
   }, [zoomTarget, navigate]);
 
+  const handleZoomDone = useCallback((id: string) => {
+    navigate(`/property?place=${id}`);
+  }, [navigate]);
+
   const mainStyle = useCallback(
     (feature?: GeoJSON.Feature) => {
       if (!feature) return {};
       const id = feature.properties?.id;
-      const count = feature.properties?.lotCount || 0;
       const isHovered = hoveredId === id;
+      const hasProperties = MUNICIPALITIES_WITH_PROPERTIES.has(id);
+      const borderColor = hasProperties ? "#149f42" : "#ffd700";
       return {
-        fillColor: getDensityColor(count),
-        color: isHovered ? "#fff" : "rgba(255,255,255,0.6)",
-        weight: isHovered ? 3 : 1.5,
-        fillOpacity: isHovered ? 0.7 : 0.45,
-        dashArray: isHovered ? "" : "4 2",
+        fillColor: hasProperties ? "rgba(20, 159, 66, 0.25)" : "rgba(255, 215, 0, 0.15)",
+        color: isHovered ? "#fff" : borderColor,
+        weight: isHovered ? 3 : 2,
+        fillOpacity: isHovered ? 0.6 : 0.4,
+        dashArray: isHovered ? "" : "",
       };
     },
     [hoveredId]
@@ -180,6 +219,7 @@ const MunicipalityMap = () => {
       const props = feature.properties;
       if (!props) return;
       const place = places.find((p) => p.id === props.id);
+      const hasProps = MUNICIPALITIES_WITH_PROPERTIES.has(props.id);
 
       layer.on({
         mouseover: () => setHoveredId(props.id),
@@ -188,7 +228,7 @@ const MunicipalityMap = () => {
       });
 
       layer.bindTooltip(
-        `<strong>${props.name}</strong><br/>${props.lotCount} lots available${place ? `<br/>${place.price}` : ""}`,
+        `<strong>${props.name}</strong><br/>${hasProps ? `${props.lotCount} lots available` : "No properties yet"}${place ? `<br/>${place.price}` : ""}`,
         { direction: "top", sticky: true, className: "municipality-tooltip" }
       );
     },
@@ -225,21 +265,11 @@ const MunicipalityMap = () => {
         />
 
         {layers.flood && (
-          <GeoJSON
-            key="flood"
-            data={geojsonData}
-            style={floodStyle}
-            onEachFeature={onEachOverlay}
-          />
+          <GeoJSON key="flood" data={geojsonData} style={floodStyle} onEachFeature={onEachOverlay} />
         )}
 
         {layers.wildfire && (
-          <GeoJSON
-            key="wildfire"
-            data={geojsonData}
-            style={wildfireStyle}
-            onEachFeature={onEachOverlay}
-          />
+          <GeoJSON key="wildfire" data={geojsonData} style={wildfireStyle} onEachFeature={onEachOverlay} />
         )}
 
         {layers.heatmap && (
@@ -262,18 +292,19 @@ const MunicipalityMap = () => {
         )}
 
         <ZoomNavigator target={zoomTarget} onDone={handleNavigate} />
+        <MapController ref={controllerRef} geojsonData={geojsonData} onZoomDone={handleZoomDone} />
       </MapContainer>
 
       <div className="map-legend">
-        <span><span className="legend-dot" style={{ background: "#149f42" }} /> 10+ lots</span>
-        <span><span className="legend-dot" style={{ background: "#4db86a" }} /> 6-9 lots</span>
-        <span><span className="legend-dot" style={{ background: "#f6c600" }} /> 4-5 lots</span>
-        <span><span className="legend-dot" style={{ background: "#e0a800" }} /> &lt;4 lots</span>
+        <span><span className="legend-dot" style={{ background: "#149f42" }} /> Has Properties</span>
+        <span><span className="legend-dot" style={{ background: "#ffd700" }} /> Coming Soon</span>
         {layers.flood && <span><span className="legend-dot" style={{ background: "rgba(30,100,220,0.5)" }} /> Flood risk</span>}
         {layers.wildfire && <span><span className="legend-dot" style={{ background: "rgba(220,50,30,0.5)" }} /> Wildfire risk</span>}
       </div>
     </div>
   );
-};
+});
+
+MunicipalityMap.displayName = "MunicipalityMap";
 
 export default MunicipalityMap;
