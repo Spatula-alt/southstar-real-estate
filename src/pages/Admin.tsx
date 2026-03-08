@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import southstarLogo from "@/assets/southstar-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
