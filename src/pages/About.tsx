@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import southstarLogo from "@/assets/southstar-logo.png";
 import { Link } from "react-router-dom";
 import AyalaFooter from "@/components/AyalaFooter";
 import { getAvatarUrl } from "@/utils/avatarSeed";

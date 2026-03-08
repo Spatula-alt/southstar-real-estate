@@ -1,4 +1,5 @@
 import { Link, useParams } from "react-router-dom";
+import southstarLogo from "@/assets/southstar-logo.png";
 import AyalaFooter from "@/components/AyalaFooter";
 import { agents } from "@/data/agents";
 import { getAgentAvatarUrl } from "@/utils/avatarSeed";

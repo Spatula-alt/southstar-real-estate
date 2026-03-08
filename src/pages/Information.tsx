@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import southstarLogo from "@/assets/southstar-logo.png";
 
 const Information = () => {
   return (
