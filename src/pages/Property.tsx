@@ -157,7 +157,7 @@ const Property = () => {
                   <img src={place.image} alt={place.name} style={{ cursor: "pointer" }} />
                   <div className="recommendation-details">
                     <h4>{place.name}</h4>
-                    <p>{place.price} · {place.type}</p>
+                    <p>{place.type}</p>
                     <button className="view-btn">View Property</button>
                   </div>
                 </article>
