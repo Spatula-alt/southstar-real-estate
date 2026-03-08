@@ -182,13 +182,11 @@ const MunicipalityMap = forwardRef<MunicipalityMapHandle>((_, ref) => {
       const id = feature.properties?.id;
       const isHovered = hoveredId === id;
       const hasProperties = MUNICIPALITIES_WITH_PROPERTIES.has(id);
-      const borderColor = hasProperties ? "#149f42" : "#ffd700";
       return {
-        fillColor: hasProperties ? "rgba(20, 159, 66, 0.25)" : "rgba(255, 215, 0, 0.15)",
-        color: isHovered ? "#fff" : borderColor,
-        weight: isHovered ? 3 : 2,
-        fillOpacity: isHovered ? 0.6 : 0.4,
-        dashArray: isHovered ? "" : "",
+        fillColor: hasProperties ? "rgba(20, 159, 66, 0.6)" : "rgba(200, 180, 40, 0.55)",
+        color: "#fff",
+        weight: 1.5,
+        fillOpacity: isHovered ? 0.8 : 0.6,
       };
     },
     [hoveredId]
