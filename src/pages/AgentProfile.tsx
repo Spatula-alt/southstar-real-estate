@@ -11,7 +11,10 @@ const AgentProfile = () => {
     return (
       <>
         <header className="site-header">
-          <Link to="/" style={{ textDecoration: "none", color: "inherit" }}><h1>SouthStar Realty</h1></Link>
+          <Link to="/" style={{ textDecoration: "none", color: "inherit", display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src={southstarLogo} alt="SouthStar Realty logo" className="header-logo" />
+            <h1>SouthStar Realty</h1>
+          </Link>
         </header>
         <nav className="tab-nav">
           <div className="nav-container">
