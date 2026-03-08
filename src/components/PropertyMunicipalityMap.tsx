@@ -46,7 +46,7 @@ const starIcon = L.divIcon({
 });
 
 const MUNICIPALITIES_WITH_PROPERTIES = new Set([
-  "calapan", "pinamalayan", "gloria", "bansud", "bongabong"
+  "baco", "pinamalayan", "gloria", "bansud", "bongabong"
 ]);
 
 const metaByGeoName = new Map(
