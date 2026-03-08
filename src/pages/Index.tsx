@@ -1,13 +1,15 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { places } from "@/data/properties";
 import AyalaFooter from "@/components/AyalaFooter";
-import MunicipalityMap from "@/components/MunicipalityMap";
+import MunicipalityMap, { MunicipalityMapHandle } from "@/components/MunicipalityMap";
 import MobileDrawer from "@/components/MobileDrawer";
+import southstarLogo from "@/assets/southstar-logo.png";
 
 const Index = () => {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const mapRef = useRef<MunicipalityMapHandle>(null);
+  const mapSectionRef = useRef<HTMLElement>(null);
 
   const filteredPlaces = searchQuery.trim()
     ? places.filter(
@@ -18,7 +20,11 @@ const Index = () => {
     : places;
 
   const handleInquire = (placeId: string) => {
-    navigate(`/property?place=${placeId}`);
+    // Scroll to map section then zoom into municipality
+    mapSectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      mapRef.current?.zoomToMunicipality(placeId);
+    }, 600);
   };
 
   return (
@@ -26,7 +32,7 @@ const Index = () => {
       {/* Header */}
       <header className="index-header">
         <img
-          src="https://th.bing.com/th/id/OIP.2pfvKpHfX1z7Cen5GSLDFQHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.5&pid=1.7&rm=3"
+          src={southstarLogo}
           alt="SouthStar Realty logo"
           className="header-logo"
         />
@@ -70,7 +76,6 @@ const Index = () => {
 
       {/* Main Content */}
       <main className="wrap index-content">
-
         <div className="index-overview">
           {/* Property Listings - Left Column */}
           <section className="index-listings">
@@ -102,9 +107,9 @@ const Index = () => {
           </section>
 
           {/* Interactive Leaflet Map - Right Column */}
-          <section className="index-map">
+          <section className="index-map" ref={mapSectionRef}>
             <h2>Interactive Map of Oriental Mindoro</h2>
-            <MunicipalityMap />
+            <MunicipalityMap ref={mapRef} />
           </section>
         </div>
       </main>
