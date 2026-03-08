@@ -17,6 +17,24 @@ const PROPERTY_PINS: Record<string, { lat: number; lng: number; label: string }[
     { lat: 12.952511, lng: 121.452285, label: "Lot 8" },
     { lat: 12.953227, lng: 121.463948, label: "Lot 9" },
     { lat: 12.953164, lng: 121.476832, label: "Lot 10" },
+    { lat: 12.896612, lng: 121.460913, label: "Lot 11" },
+    { lat: 12.934657, lng: 121.482311, label: "Lot 12" },
+    { lat: 12.935967, lng: 121.473224, label: "Lot 13" },
+  ],
+  pinamalayan: [
+    { lat: 13.014984, lng: 121.459439, label: "Lot 1" },
+    { lat: 13.026152, lng: 121.476916, label: "Lot 2" },
+    { lat: 13.064125, lng: 121.489163, label: "Lot 3" },
+    { lat: 12.983628, lng: 121.480796, label: "Lot 4" },
+  ],
+  calapan: [
+    { lat: 13.356916, lng: 121.121027, label: "Lot 1" },
+  ],
+  bansud: [
+    { lat: 12.853409, lng: 121.479577, label: "Lot 1" },
+  ],
+  bongabong: [
+    { lat: 12.785867, lng: 121.475386, label: "Lot 1" },
   ],
 };
 
