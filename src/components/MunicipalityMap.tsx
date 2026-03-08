@@ -182,13 +182,11 @@ const MunicipalityMap = forwardRef<MunicipalityMapHandle>((_, ref) => {
       const id = feature.properties?.id;
       const isHovered = hoveredId === id;
       const hasProperties = MUNICIPALITIES_WITH_PROPERTIES.has(id);
-      const borderColor = hasProperties ? "#149f42" : "#ffd700";
       return {
-        fillColor: hasProperties ? "rgba(20, 159, 66, 0.25)" : "rgba(255, 215, 0, 0.15)",
-        color: isHovered ? "#fff" : borderColor,
-        weight: isHovered ? 3 : 2,
-        fillOpacity: isHovered ? 0.6 : 0.4,
-        dashArray: isHovered ? "" : "",
+        fillColor: hasProperties ? "rgba(20, 159, 66, 0.6)" : "rgba(200, 180, 40, 0.55)",
+        color: "#fff",
+        weight: 1.5,
+        fillOpacity: isHovered ? 0.8 : 0.6,
       };
     },
     [hoveredId]
@@ -296,8 +294,8 @@ const MunicipalityMap = forwardRef<MunicipalityMapHandle>((_, ref) => {
       </MapContainer>
 
       <div className="map-legend">
-        <span><span className="legend-dot" style={{ background: "#149f42" }} /> Has Properties</span>
-        <span><span className="legend-dot" style={{ background: "#ffd700" }} /> Coming Soon</span>
+        <span><span className="legend-dot" style={{ background: "rgba(20, 159, 66, 0.7)" }} /> Has Properties</span>
+        <span><span className="legend-dot" style={{ background: "rgba(200, 180, 40, 0.65)" }} /> Coming Soon</span>
         {layers.flood && <span><span className="legend-dot" style={{ background: "rgba(30,100,220,0.5)" }} /> Flood risk</span>}
         {layers.wildfire && <span><span className="legend-dot" style={{ background: "rgba(220,50,30,0.5)" }} /> Wildfire risk</span>}
       </div>

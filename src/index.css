@@ -32,11 +32,15 @@ body {
 /* Header */
 .site-header {
   background: linear-gradient(90deg, var(--primary-dark), var(--primary));
-  padding: 28px 0;
+  padding: 18px 0;
   text-align: center;
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
-.site-header h1 { font-size: 2rem; font-weight: 700; }
+.site-header h1 { font-size: 1.5rem; font-weight: 700; margin: 0; }
 .site-header p, .site-header .tag {
   opacity: .95;
   margin-top: 6px;
@@ -867,13 +871,13 @@ form button:hover { opacity: 0.9; }
 }
 .index-header h1 { font-size: 1.25rem; font-weight: 700; margin: 0; }
 .header-logo {
-  width: 48px;
-  height: 48px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1px dashed rgba(0,0,0,0.08);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: contain;
   background: #fff;
   display: block;
+  padding: 2px;
 }
 
 /* Index Nav Row */
