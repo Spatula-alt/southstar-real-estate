@@ -4,15 +4,15 @@ import AyalaFooter from "@/components/AyalaFooter";
 
 const featuredImages = [
   {
-    src: "https://www.travelorientalmindoro.ph/Content/img/uploads/3997051e-5e30-4aff-9f65-cc33f90d3b6b_thumb.jpg",
+    src: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/f0/05/c1/white-beach.jpg?w=700&h=500&s=1",
     alt: "Puerto Galera Beach",
   },
   {
-    src: "https://travelorientalmindoro.ph/Content/img/uploads/888ed3ef-1f02-4ee3-8f8d-560bf8fb3474.jpg",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mindoro_Oriental_Capitol.jpg/1280px-Mindoro_Oriental_Capitol.jpg",
     alt: "Pinamalayan",
   },
   {
-    src: "https://travelorientalmindoro.ph/Content/img/uploads/3cf6e252-5281-4ba3-b494-2d087f0bae9e_thumb.jpg",
+    src: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Gloria_Oriental_Mindoro_1.jpg/1280px-Gloria_Oriental_Mindoro_1.jpg",
     alt: "Gloria",
   },
   {
