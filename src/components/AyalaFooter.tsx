@@ -36,7 +36,7 @@ const AyalaFooter = () => {
           <div className="footer-nav-col">
             <Link to="/">HOME</Link>
             <Link to="/popular">ESTATES</Link>
-            <Link to="/popular">PROPERTIES</Link>
+            <Link to="/properties">PROPERTIES</Link>
           </div>
           <div className="footer-nav-col">
             <Link to="/about">ABOUT US</Link>
