@@ -2575,12 +2575,8 @@ form button:hover { opacity: 0.9; }
   padding: 30px 0 50px;
 }
 .welcome-copy-block {
-  margin-bottom: 32px;
-  padding: 24px 28px;
-  background: #fff;
-  border-left: 4px solid var(--primary);
-  border-radius: 6px;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+  margin-bottom: 24px;
+  text-align: center;
 }
 .welcome-copy-block p {
   color: #444;
@@ -2591,17 +2587,15 @@ form button:hover { opacity: 0.9; }
 .welcome-copy-block p:last-child { margin-bottom: 0; }
 .welcome-copy-cta {
   text-align: center;
-  border-left: none;
-  background: var(--primary);
 }
 .welcome-copy-cta p {
-  color: #fff !important;
-  font-size: 1.3rem;
+  color: #333;
+  font-size: 1.15rem;
   font-weight: 700;
 }
 .welcome-copy-cta strong {
-  color: var(--accent);
-  font-size: 1.5rem;
+  color: #d4a800;
+  font-size: 1.3rem;
 }
 
 @media (max-width: 768px) {
