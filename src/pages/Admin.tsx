@@ -85,7 +85,7 @@ const Admin = () => {
 
       <nav className="tab-nav">
         <div className="nav-container">
-          <Link to="/">PROPERTIES</Link>
+          <Link to="/properties">PROPERTIES</Link>
           <Link to="/admin" className="active">ADMIN</Link>
           <Link to="/login">LOG OUT</Link>
         </div>

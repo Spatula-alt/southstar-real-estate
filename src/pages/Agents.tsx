@@ -16,7 +16,7 @@ const Agents = () => {
 
       <nav className="tab-nav">
         <div className="nav-container">
-          <Link to="/">PROPERTIES</Link>
+          <Link to="/properties">PROPERTIES</Link>
           <Link to="/popular">POPULAR</Link>
           <Link to="/about">ABOUT US</Link>
           <Link to="/contact">CONTACT</Link>

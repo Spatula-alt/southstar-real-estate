@@ -19,7 +19,7 @@ const AgentProfile = () => {
         </header>
         <nav className="tab-nav">
           <div className="nav-container">
-            <Link to="/">PROPERTIES</Link><Link to="/popular">POPULAR</Link><Link to="/about">ABOUT US</Link>
+            <Link to="/properties">PROPERTIES</Link><Link to="/popular">POPULAR</Link><Link to="/about">ABOUT US</Link>
             <Link to="/contact">CONTACT</Link><Link to="/agents" className="active">AGENTS</Link><Link to="/login">LOG IN</Link>
           </div>
         </nav>
@@ -43,7 +43,7 @@ const AgentProfile = () => {
       </header>
       <nav className="tab-nav">
         <div className="nav-container">
-          <Link to="/">PROPERTIES</Link><Link to="/popular">POPULAR</Link><Link to="/about">ABOUT US</Link>
+          <Link to="/properties">PROPERTIES</Link><Link to="/popular">POPULAR</Link><Link to="/about">ABOUT US</Link>
           <Link to="/contact">CONTACT</Link><Link to="/agents" className="active">AGENTS</Link><Link to="/login">LOG IN</Link>
         </div>
       </nav>
