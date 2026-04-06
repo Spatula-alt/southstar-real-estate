@@ -15,7 +15,7 @@ const Information = () => {
       {/* Navigation */}
       <nav className="tab-nav">
         <div className="nav-container">
-          <Link to="/">PROPERTIES</Link>
+          <Link to="/properties">PROPERTIES</Link>
           <Link to="/popular">POPULAR</Link>
           <Link to="/about">ABOUT US</Link>
           <Link to="/contact">CONTACT</Link>
@@ -128,7 +128,7 @@ const Information = () => {
             <div className="footer-nav-col">
               <Link to="/">HOME</Link>
               <Link to="/">ESTATES</Link>
-              <Link to="/">PROPERTIES</Link>
+              <Link to="/properties">PROPERTIES</Link>
             </div>
             <div className="footer-nav-col">
               <Link to="/about">ABOUT US</Link>

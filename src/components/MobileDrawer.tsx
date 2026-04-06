@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const navItems = [
-  { path: "/", label: "Buy", icon: "🏠" },
+  { path: "/properties", label: "Buy", icon: "🏠" },
   { path: "/popular", label: "Popular", icon: "🔥" },
   { path: "/about", label: "About Us", icon: "ℹ️" },
   { path: "/contact", label: "Contact", icon: "📅" },
