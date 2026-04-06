@@ -2499,3 +2499,119 @@ form button:hover { opacity: 0.9; }
   background: var(--primary);
   color: #fff;
 }
+
+/* ===== WELCOME / LANDING PAGE ===== */
+.welcome-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  padding: 24px 20px;
+  text-align: center;
+}
+.welcome-logo-link {
+  text-decoration: none;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.welcome-header h1 {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.welcome-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 50px;
+}
+.welcome-tile {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  aspect-ratio: 16/10;
+}
+.welcome-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s;
+}
+.welcome-tile:hover img {
+  transform: scale(1.05);
+}
+.welcome-cta-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+.welcome-cta-btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 22px 36px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.5px;
+  transition: background 0.3s, transform 0.2s;
+}
+.welcome-cta-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.05);
+}
+.welcome-copy {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 30px 0 50px;
+}
+.welcome-copy-block {
+  margin-bottom: 32px;
+  padding: 24px 28px;
+  background: #fff;
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+}
+.welcome-copy-block p {
+  color: #444;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin-bottom: 12px;
+}
+.welcome-copy-block p:last-child { margin-bottom: 0; }
+.welcome-copy-cta {
+  text-align: center;
+  border-left: none;
+  background: var(--primary);
+}
+.welcome-copy-cta p {
+  color: #fff !important;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.welcome-copy-cta strong {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .welcome-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .welcome-header h1 { font-size: 1.4rem; }
+}
+@media (max-width: 480px) {
+  .welcome-grid {
+    grid-template-columns: 1fr;
+  }
+}
