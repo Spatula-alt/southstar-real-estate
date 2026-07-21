@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "sdk_version": "0.24.0",
+  "path": "/functions/v1/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://zszlxyplymoecojebzuq.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "southstar-realty-mcp",
+      "version": "0.1.0",
+      "title": "SouthStar Realty MCP"
+    },
+    "tools": [
+      {
+        "name": "list_appointments",
+        "title": "List appointments",
+        "description": "List property viewing appointments booked in SouthStar Realty.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "book_appointment",
+        "title": "Book a property viewing",
+        "description": "Book a property viewing appointment with SouthStar Realty.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "municipality": {
+              "type": "string"
+            },
+            "property_id": {
+              "type": "string"
+            },
+            "preferred_date": {
+              "type": "string",
+              "description": "ISO date, YYYY-MM-DD"
+            },
+            "preferred_time": {
+              "type": "string",
+              "description": "e.g. 10:00 AM"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "email",
+            "preferred_date",
+            "preferred_time"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_contact_messages",
+        "title": "List contact messages",
+        "description": "List contact form submissions sent to SouthStar Realty.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "send_contact_message",
+        "title": "Send a contact message",
+        "description": "Send a message to SouthStar Realty via the contact form.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "name",
+            "email",
+            "message"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_reviews",
+        "title": "List reviews",
+        "description": "List client reviews for SouthStar Realty. Filter by status if provided.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "approved",
+                "rejected"
+              ]
+            }
+          }
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "submit_review",
+        "title": "Submit a review",
+        "description": "Submit a client review for SouthStar Realty. Review starts as pending until approved.",
+        "annotations": {
+          "readOnlyHint": false,
+          "destructiveHint": false,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "feedback": {
+              "type": "string",
+              "minLength": 1
+            },
+            "rating_overall": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "rating_service": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "rating_hospitality": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "rating_affordability": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "rating_trust": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "avatar_url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "name",
+            "feedback"
+          ]
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}

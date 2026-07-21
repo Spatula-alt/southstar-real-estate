@@ -1,11 +1,17 @@
 import { useState } from "react";
 import southstarLogo from "@/assets/southstar-logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
 
+const isSafeNext = (n: string | null): n is string =>
+  !!n && n.startsWith("/") && !n.startsWith("//");
+
 const Login = () => {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const nextParam = params.get("next");
+  const next = isSafeNext(nextParam) ? nextParam : "/";
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,14 +36,14 @@ const Login = () => {
         });
         if (error) throw error;
         toast({ title: "Welcome back!", description: "You're now logged in." });
-        navigate("/");
+        navigate(next);
       } else {
         const { error } = await supabase.auth.signUp({
           email: formData.email,
           password: formData.password,
           options: {
             data: { full_name: formData.name },
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: window.location.origin + next,
           },
         });
         if (error) throw error;
