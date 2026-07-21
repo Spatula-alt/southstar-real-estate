@@ -14,6 +14,7 @@ import Agents from "./pages/Agents";
 import AgentProfile from "./pages/AgentProfile";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
+import OAuthConsent from "./pages/OAuthConsent";
 import NotFound from "./pages/NotFound";
 import Chatbot from "./components/Chatbot";
 
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/information" element={<Information />} />
+          <Route path="/.lovable/oauth/consent" element={<OAuthConsent />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Chatbot />
