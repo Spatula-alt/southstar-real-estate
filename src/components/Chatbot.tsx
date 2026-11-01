@@ -154,7 +154,7 @@ export default function Chatbot() {
         ...prev,
         {
           role: "assistant",
-          content: "Sorry, I'm having trouble connecting right now. Please try again or contact our office at +63 912 345 6789.",
+          content: "Sorry, I'm having trouble connecting right now. Please try again or contact our office at 0915 086 5973 or 0995 348 2807.",
         },
       ]);
     } finally {

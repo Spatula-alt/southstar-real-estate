@@ -85,7 +85,7 @@ const Contact = () => {
             <h3>Our Office</h3>
             <div className="office-details">
               <p><span className="icon">📍</span> Calapan City, Oriental Mindoro</p>
-              <p><span className="icon">📞</span> +63 912 345 6789</p>
+              <p><span className="icon">📞</span> <a href="tel:09150865973">0915 086 5973</a> / <a href="tel:09953482807">0995 348 2807</a></p>
               <p><span className="icon">📧</span> <a href="mailto:info@southstarrealty.com">info@southstarrealty.com</a></p>
             </div>
             <h4>Office Hours</h4>
